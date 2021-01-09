@@ -1,6 +1,6 @@
 # Website and microservices web applications templates
 
-[Mockup list](https://mockup.vmiis.com/)
+https://mockup.vmiis.com/
   
 How to run the mockups on a local computer
 1. [download and unzip](https://github.com/vmiis/mockup/archive/master.zip)

@@ -1,0 +1,206 @@
+<div id=D__ID>
+	<div id=page__ID class=home_page_1>
+        <div style='padding:10px 20px 0 20px;'>
+            <form class="form-inline text-center">
+				<div class="text-center" style='width:100%'>
+					<input id=keywords__ID class=form-control style='width:230px;' placeholder="multiple words 'AND' filter">
+				</div>
+            </form>
+            <hr>
+        </div>
+        <div id=panel__ID class=panel__ID>
+            <div class=block__ID>
+				<span>Room booking</span>
+				<ul>
+					<li><a href='?/room-booking-form'>New booking</a></li>
+					<li><a href='?/room-calendar-day'>Booking calendar day</a></li>
+					<li><a href='?/room-calendar-week'>Booking calendar week</a></li>
+					<li><a href='?/room-calendar-month'>Booking calendar month</a></li>
+					<span>Admin</span>
+					<ul>
+						<li><a href='?/room-booking-data'>Booking data</a></li>
+						<li><a href='?/room-list-data'>Room list</a></li>
+					</ul>
+                </ul>
+			</div>
+            <div class=block__ID>
+				<span>Car booking</span>
+				<ul>
+					<li><a href='?/car-booking-form'>New booking</a></li>
+					<li><a href='?/car-calendar-day'>Booking calendar day</a></li>
+					<li><a href='?/car-calendar-week'>Booking calendar week</a></li>
+					<li><a href='?/car-calendar-month'>Booking calendar month</a></li>
+					<span>Admin</span>
+					<ul>
+						<li><a href='?/car-booking-data'>Booking data</a></li>
+						<li><a href='?/car-list-data'>Car list</a></li>
+					</ul>
+                </ul>
+			</div>
+            <div class=block__ID>
+				<span>Design</span>
+				<ul>
+					<li><a href='?/lightbox'>Lightbox</a></li>
+					<li><a href='?/hover-effect-01'>Image hover effect 01</a></li>
+				</ul>
+			</div>
+            <div class=block__ID>
+				<span>Chart</span>
+				<ul>
+					<li><a href='?/pie-chart'>Pie chart</a></li>
+					<li><a href='?/pie-chart-3d'>Pie chart 3d</a></li>
+					<li><a href='?/pie-chart-donut'>Pie chart donut</a></li>
+				</ul>
+			</div>
+            <div class=block__ID>
+				<span>Services</span>
+				<ul>
+					<li><a href='?/services-p1'>Services 01</a></li>
+				</ul>
+			</div>
+            <div class=block__ID>
+				<span>Clinical trials</span>
+				<ul>
+					<li><a href='?/clinical-trials-participant-data'>Participants</a></li>
+				</ul>
+			</div>
+            <div class=block__ID>
+				<span>Form fields</span>
+				<ul>
+					<li><a href='?/clinical-trials-participant-data'>Participants</a></li>
+				</ul>
+			</div>
+            <div class=block__ID>
+				<span>Website contents</span>
+				<ul>
+					<span>2 columns content page</span>
+					<ul>
+							<li><a href='?/2-columns-content-page-01'>Page 01</a></li>
+						<li><a href='?/2-columns-content-page-02'>Page 02</a></li>
+						<li><a href='?/2-columns-content-page-03'>Page 03</a></li>
+						<li><a href='?/2-columns-content-page-04'>Page 04</a></li>
+						<li><a href='?/2-columns-content-page-05'>Page 05</a></li>
+					</ul>
+				</ul>
+			</div>
+            <div class=block__ID>
+				<span>Stripe</span>
+				<ul>
+					<li><a href='?/wappsystem-secrete-data'>Secretes</a></li>
+					<li><a href='?/shopping-cart'>Shopping cart</a></li>
+				</ul>
+			</div>
+        </div>
+	</div>
+	<script>
+		function F__ID(){
+            //--------------------------------------------------------
+			$('#apply__ID').on('click',function(){
+				filter();
+			})
+			$('#keywords__ID').on('keyup',function(){
+				filter();
+			})
+			var filter=function(){
+				$('#panel__ID li').show();
+				if($('#keywords__ID').val().length==0){
+					$('#panel__ID span').show();
+				}
+				else{
+					$('#panel__ID span').hide();
+				}
+				var words=$('#keywords__ID').val().split(' ');
+				$('#panel__ID li').each(function(){
+					var name=$(this).html().toUpperCase();
+					for(var i=0;i<words.length;i++){
+						var word=words[i].toUpperCase(); 
+						if(word!=""){
+							if(name.indexOf(word)==-1){
+								$(this).hide();
+								break;
+							}
+						}
+					}
+				})
+			}
+            //--------------------------------------------------------
+            $vm.module_list["__MODULE__"].show=function(){
+                document.title="Panel | "+$vm.default_title;
+                $("meta[name='description']").attr("content","Control Panel");
+            }
+            //--------------------------------------------------------
+            $('#panel__ID a').on('click',function(e){
+                e.preventDefault();
+                var href=$(this).attr('href');
+                if(href!=undefined){
+                    href=href.replace('?\/','');
+					href=href.replace(/\//g,'_');
+                    $vm.load_module(href,'',{});
+                }
+            })
+            //--------------------------------------------------------
+		}
+	</script>
+	<style>
+        #D__ID{
+            background-color:#fff;
+            height:100%;
+            overflow: auto;
+            animation: vm_module_fadein 1.0s;
+        }
+        .panel__ID{
+            padding:0px 50px 10px 50px;
+            font-size:14px;
+            max-width: 100%;
+    		column-count: 4;
+    		column-width: 300px;
+    		column-gap: 30px;
+            
+        }
+	    .panel__ID a{
+		    /*margin:3px 10px;*/
+            /*white-space: nowrap;*/
+	    }
+	    .panel__ID>div>span{
+			color:#283f55;
+			font-weight: bold;
+            font-weight: 600;
+			/*margin:3px 10px;*/
+            /*white-space: nowrap;*/
+	    }
+        .panel__ID li{
+            /*text-decoration: none;*/
+        }
+        a {
+            text-decoration: none;
+        }
+        a:link {
+            color:#555;
+        }
+        a:visited {
+            color:#555;
+        }
+        a:hover {
+            color:red;
+        }
+        a:active {
+            color:#555;
+        }
+        #keywords__ID::placeholder {
+            color: #ccc;
+            padding-left:6px;
+        }
+        .block__ID{
+            display:inline-block;
+            vertical-align:top;
+            border:0px solid red;
+            width:100%;
+        }        
+        @media screen and (max-width:768px){
+            .panel__ID{
+                padding:20px;
+            }
+        }
+
+	</style>
+</div>

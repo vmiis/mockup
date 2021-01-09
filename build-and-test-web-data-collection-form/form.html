@@ -1,0 +1,224 @@
+<div id=D__ID>
+    <section id=form_container__ID>
+    	<div id=header__ID>
+    		Form
+    	</div>
+    	<form id=F__ID>
+    		<div class="container">
+				<!-- Form Inputs-------------------------------------->
+				<div id=dynamic_part__ID></div>
+				<!---------------------------------------------------->				
+    			<br>
+    			<div class="row">
+    				<div class=col>
+    					<button id=submit__ID type="submit" class="btn btn-secondary">Submit</button>
+    				</div>
+    			</div>
+    		</div>
+		</form>
+		<a id=downdload_form>Download HTML form module</a><br>
+		<a id=downdload_data>Download HTML data browser module</a>
+	</section>
+	VmInclude:__COMPONENT__/m/model.01.html
+    <script>
+    	function F__ID(){
+			var grid_fields="";
+			var form_contents="";
+			//--------------------------------------------------------
+			var create_form=function(){
+				grid_fields="";
+				form_contents="";
+				var excel_field			=$vm.gData.excel_field;			if(excel_field==undefined) 			excel_field=[];
+				var excel_form_config	=$vm.gData.excel_form_config;	if(excel_form_config==undefined) 	excel_form_config=[];
+				
+				var LL="";
+				for(var i=0;i<excel_form_config.length;i++){
+					if(excel_form_config[i][0]=='Label on left side'){
+						LL=excel_form_config[i][1];
+					}
+				}
+
+				for(var i=1;i<excel_field.length;i++){
+					var j;
+					j=excel_field[0].indexOf('Database Field Name'); 	var database_name	=excel_field[i][j];
+					j=excel_field[0].indexOf('Form Display Name'); 		var display_name	=excel_field[i][j];
+					j=excel_field[0].indexOf('Field Type'); 			var type			=excel_field[i][j];
+					j=excel_field[0].indexOf('Option1'); 				var option1			=excel_field[i][j];
+					j=excel_field[0].indexOf('Required'); 				var required		=excel_field[i][j];
+					
+					if(required==undefined) required="";
+
+					if(display_name==undefined) display_name=database_name;
+					display_name=display_name.replace(/_/g,' ');
+					database_name=database_name.replace(/ /g,'_');
+
+					var begin1="<div class='row row__ID'><div class='col'>\r\n";
+					    begin1+="\t<span>"+display_name+"</span><br>\r\n\t";
+					var end1="\r\n</div></div>\r\n\r\n";
+					var begin2="<div class='row row__ID'>\r\n";
+						begin2+="\t<div class='col-lg-4 col-sm-12'>"+display_name+"</div>\r\n";
+						begin2+="\t<div class='col-lg-8 col-sm-12'>\r\n\t\t"
+					var end2="\r\n\t</div>\r\n";
+					    end2+="</div>\r\n\r\n";
+
+
+					var c="";
+					switch(type){
+						case "Text":  		c="<input type=text class=form-control name="+database_name+" "+required+" />"; 	break;
+						case "Email": 		c="<input type=email class=form-control name="+database_name+" "+required+" />";	break;
+						case "Phone": 		c="<input type=phone class=form-control name="+database_name+" "+required+" />";	break;
+						case "Textarea":	c="<textarea class=form-control name="+database_name+" "+required+" /></textarea>";break;
+						case "Drop Down List":
+							var c="<select class=form-control name="+database_name+" "+required+" />\r\n";
+							var nv=option1.split(',');
+							for(var k=0;k<nv.length;k++){
+								var n=nv[k].split('/')[0];
+								var v=nv[k].split('/').pop();
+								c+="\t\t\t<option value="+v+">"+n+"</option>\r\n";
+							}
+							c+="\t\t</select>"
+							break;
+						case "Horizontal radio button list":
+							var c="";
+							var nv=option1.split(',');
+							for(var k=0;k<nv.length;k++){
+								var n=nv[k].split('/')[0];
+								var v=nv[k].split('/').pop();
+								if(k==0) c+="<label><input type='radio' name="+database_name+" value="+v+" "+required+" >&nbsp&nbsp"+n+"</label>&nbsp&nbsp&nbsp&nbsp";
+								else c+="<label><input type='radio' name="+database_name+" value="+v+">&nbsp&nbsp"+n+"</label>&nbsp&nbsp&nbsp&nbsp";
+							}
+							break;
+						case "Vertical radio button list":
+							var c="";
+							var nv=option1.split(',');
+							for(var k=0;k<nv.length;k++){
+								var n=nv[k].split('/')[0];
+								var v=nv[k].split('/').pop();
+								if(k==0) c+="<label><input type='radio' name="+database_name+" value="+v+" "+required+" >&nbsp&nbsp"+n+"</label><br>";
+								else c+="<label><input type='radio' name="+database_name+" value="+v+">&nbsp&nbsp"+n+"</label><br>";
+							}
+							break;
+					}
+					if(LL!="Yes") form_contents+=begin1+c+end1;
+					else form_contents+=begin2+c+end2;
+					
+					if(grid_fields!="") grid_fields+=",";
+					grid_fields+=database_name+"|"+display_name;
+				}
+				$('#dynamic_part__ID').html(form_contents);
+				for(var i=0;i<excel_form_config.length;i++){
+					if(excel_form_config[i][0]=='Form Title'){
+						$('#header__ID').text(excel_form_config[i][1]);
+						form_name=excel_form_config[i][1]+".html";
+					}
+					else if(excel_form_config[i][0]=='Form Width'){
+						$('#form_container__ID').css('width',excel_form_config[i][1]+'px');
+						form_width=excel_form_config[i][1]+'px';
+					}
+					else if(excel_form_config[i][0]=='Database Table Name'){
+						m.Table="demo-vm-"+excel_form_config[i][1];
+					}
+				}
+			}
+			//-------------------------------------
+			VmInclude:__COMPONENT__/f/form.01.js
+			//-------------------------------------
+			//var form_contents="";
+			var form_on_load="";
+			var form_name="";
+			var form_width="600px";
+			//-------------------------------------
+			var grid_fields="";
+			//-------------------------------------
+			var old_load=m.load;
+			m.load=function(){
+				create_form();			
+				old_load();
+			}
+            //-------------------------------------
+			$('#downdload_form').on('click',function(){
+                $.get('__CURRENT_PATH__templates/template_form01.html',function(txt){
+					txt=txt.replace('___FORM_MODEL___','');
+					txt=txt.replace('___FORM_ON_LOAD___',form_on_load);
+					txt=txt.replace('___FORM_CONTENTS___',form_contents.replace(/row__ID/g,'row__'+'ID'));
+					txt=txt.replace('___FORM_WIDTH___',form_width);
+					var fn='form.html';
+					if(form_name!="") fn="form_"+form_name;
+					$vm.download_txt(fn,txt)
+                },'text');
+			})
+            //-------------------------------------
+			$('#downdload_data').on('click',function(){
+                $.get('__CURRENT_PATH__templates/template_data01.html',function(txt){
+					txt=txt.replace('___CELL_RENDER___','');
+					txt=txt.replace('___GRID_FIELDS___',"\""+grid_fields+"\"");
+					var fn='data.html';
+					if(form_name!="") fn="data_"+form_name;
+					$vm.download_txt(fn,txt)
+                },'text');
+			})
+			//-------------------------------------
+			
+
+$vm.download_txt=function(fn,txt){
+    //-----------------------
+    var bytes = [];
+        bytes.push(239);
+        bytes.push(187);
+        bytes.push(191);
+    for (var i = 0; i < txt.length; i++) {
+        if(txt.charCodeAt(i)<128) {
+            bytes.push(txt.charCodeAt(i));
+        }
+        else if(txt.charCodeAt(i)<2048) {
+            bytes.push(( (txt.charCodeAt(i) & 192) >> 6 ) + ((txt.charCodeAt(i) & 1792)>>6 ) +192); //xC0>>6 + x700>>8 +xE0
+            bytes.push(txt.charCodeAt(i) & 63 + 128); //x3F + x80
+        }
+        else if(txt.charCodeAt(i)<65536) {
+            bytes.push(((txt.charCodeAt(i) & 61440) >>12) + 224 ); //xF00>>12 + xE0
+            bytes.push(( (txt.charCodeAt(i) & 192) >> 6 ) + ((txt.charCodeAt(i) & 3840)>>6 ) +128); //xC0>>6 + xF00>>8 +x80
+            bytes.push(txt.charCodeAt(i) & 63 + 128); //x3F + x80
+        }
+    }
+    var u8 = new Uint8Array(bytes);
+    var blob = new Blob([u8]);
+    //-----------------------
+    if (navigator.appVersion.toString().indexOf('.NET') > 0){
+        window.navigator.msSaveBlob(blob, fn);
+    }
+    else{
+        var link = document.createElement("a");
+        link.setAttribute("href", window.URL.createObjectURL(blob));
+        link.setAttribute("download", fn);
+        link.style = "visibility:hidden";
+        link.download = fn;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+}
+//---------------------------------------------
+
+
+    	}
+    </script>
+    <style>
+        #form_container__ID{
+            max-width:1200px;
+        }
+        #form_container__ID a{
+            cursor:pointer;
+        }
+        #form_container__ID a:hover{
+            color:red;
+        }
+        VmInclude:__COMPONENT__/f/form.01.css
+		
+		.radio__ID label:hover{
+			background-color: #999;
+		}
+		#F__ID{
+			margin-bottom: 10px;
+		}
+    </style>
+</div>

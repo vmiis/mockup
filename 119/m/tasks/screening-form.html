@@ -1,0 +1,181 @@
+<div id=D__ID>
+    <!--third html start -->
+    <div class="container text-left mt-95 mb-3">
+        <div class="row">
+            <!-- form container start -->
+            <div class="col-12 col-lg-8 col-md-9 col-sm-12 mx-auto formbox">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- form start -->
+                        <form id="F__ID">
+                            <h3>Screening Questions</h3>
+                            <!-- participant name and study id -->
+                            <div class="form-group" style='display:none!Important'>
+                                <div class="row" style="padding-bottom:10px">
+                                    <div class="col-lg-9 col-sm-12">
+                                        <label for="participant-name">Participant</label>
+                                        <input type="text" class="form-control" name="Participant" placeholder="">
+                                    </div>
+                                    <div class="col-lg-3 col-sm-12">
+                                        <label for="participant-id">Participant ID</label>
+                                        <input type="text" class="form-control" name="Participant_uid" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <fieldset class="subquestions">
+                                    <h4>We invite you to complete the below questions to determine if you are eligible
+                                        for the study. These questions should take approximately 2 minutes to complete.
+                                        Once you complete all the questions, click the ‘Next’ button at the bottom of
+                                        the page.</h4>
+                                </fieldset>
+                            </div>
+                            <!-- form group -->
+                            <div class="form-group">
+                                <fieldset class="subquestions">
+                                    <h4> 1.	Are you aged over 18 years? </h4>
+                                    <label class="radiobuttons">
+                                        <input type="radio" name="age" value="Yes" required>
+                                        <span class="checkmark"></span> Yes</label>
+                                    <label class="radiobuttons">
+                                        <input type="radio" name="age" value="No">
+                                        <span class="checkmark"></span> No</label>
+                                </fieldset>
+                            </div>
+                            <div class="form-group">
+                                <fieldset class="subquestions">
+                                    <h4>2. Are you fluent in English?</h4>
+                                    <label class="radiobuttons">
+                                        <input type="radio" name="english" value="Yes" required>
+                                        <span class="checkmark"></span> Yes</label>
+                                    <label class="radiobuttons">
+                                        <input type="radio" name="english" value="No">
+                                        <span class="checkmark"></span> No</label>
+                                </fieldset>
+                            </div>
+                            <div class="form-group">
+                                <fieldset class="subquestions">
+                                    <h4>3. Do you have a smartphone?</h4>
+                                    <label class="radiobuttons">
+                                        <input type="radio" name="smartphone" value="Yes" required>
+                                        <span class="checkmark"></span> Yes</label>
+                                    <label class="radiobuttons">
+                                        <input type="radio" name="smartphone" value="No">
+                                        <span class="checkmark"></span> No</label>
+                                </fieldset>
+                            </div>
+                            <div class="form-group">
+                                <fieldset class="subquestions">
+                                    <h4>4. Are you planning to have a baby or currently pregnant?</h4>
+                                    <label class="radiobuttons">
+                                        <input type="radio" name="baby" value="Yes" required>
+                                        <span class="checkmark"></span> Yes</label>
+                                    <label class="radiobuttons">
+                                        <input type="radio" name="baby" value="No">
+                                        <span class="checkmark"></span> No</label>
+                                </fieldset>
+                            </div>
+                            <div class="form-group">
+                                <fieldset class="subquestions">
+                                    <h4>5. Are you a shift worker (i.e. work commencing before 6am or later than 8pm)?
+                                    </h4>
+                                    <label class="radiobuttons">
+                                        <input type="radio" name="shift" value="Yes" required>
+                                        <span class="checkmark"></span> Yes</label>
+                                    <label class="radiobuttons">
+                                        <input type="radio" name="shift" value="No">
+                                        <span class="checkmark"></span> No</label>
+                                </fieldset>
+                            </div>
+                            <div class="form-group">
+                                <fieldset class="subquestions">
+                                    <h4>6.	Have you been diagnosed with epilepsy? </h4>
+                                    <label class="radiobuttons">
+                                        <input type="radio" name="epilepsy" value="Yes" required>
+                                        <span class="checkmark"></span> Yes</label>
+                                    <label class="radiobuttons">
+                                        <input type="radio" name="epilepsy" value="No">
+                                        <span class="checkmark"></span> No</label>
+                                </fieldset>
+                            </div>
+                            <div class="form-group">
+                                <fieldset class="subquestions">
+                                    <h4>7.	Have you been diagnosed with bipolar disorder? </h4>
+                                    <label class="radiobuttons">
+                                        <input type="radio" name="bipolar" value="Yes" required>
+                                        <span class="checkmark"></span> Yes</label>
+                                    <label class="radiobuttons">
+                                        <input type="radio" name="bipolar" value="No">
+                                        <span class="checkmark"></span> No</label>
+                                </fieldset>
+                            </div>
+                            <div class="form-group">
+                                <fieldset class="subquestions">
+                                    <h4>8.	Do you have acute or chronic pain that affects your sleep? </h4>
+                                    <label class="radiobuttons">
+                                        <input type="radio" name="chronic_pain" value="Yes" required>
+                                        <span class="checkmark"></span> Yes</label>
+                                    <label class="radiobuttons">
+                                        <input type="radio" name="chronic_pain" value="No">
+                                        <span class="checkmark"></span> No</label>
+                                </fieldset>
+                            </div>
+                            <div class="form-group">
+                                <p class="note">*If unsure, please contact the research team. <br>
+                                    SleepFix Research Team<br>
+                                    <strong>Phone:</strong> (02) 9114 0481<br>
+                                    <strong>Email:</strong> woolcock.sleepfix@sydney.edu.au</p>
+                            </div>
+                            <div style="text-align:right">
+                                <button type="submit" id="submit__ID" class="btn btn-primary btn-lg">Next</button>
+                            </div>
+                            <input type="text" style="display:none" name="Eligible" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function F__ID() {
+            //-------------------------------------
+            VmInclude: __COMPONENT__/f/form.01.js
+            VmInclude: __CURRENT_PATH__/shared-form.js
+            //-------------------------------------
+            m.default_load = m.load;
+            m.load = function () {
+                m.default_load();
+                $('#D__ID').scrollTop(0);
+                $(window).scrollTop(0);
+            }
+            //-------------------------------------
+            var before_submit=m.before_submit;
+                m.before_submit=function(data,index){
+                if (data.age != 'Yes' || data.english != 'Yes' || data.smartphone != 'Yes' || data.baby != 'No' || data.shift != 'No' || data.epilepsy != 'No' || data.bipolar != 'No' || data.chronic_pain != 'No')
+                    { data.Eligible = "No" }
+                else { data.Eligible = "Yes" };
+                return before_submit(data,index);
+            }
+            //-------------------------------------
+            m.after_insert = function (data, res) {
+                 if (data.age != 'Yes' || data.english != 'Yes' || data.smartphone != 'Yes' || data.baby != 'No' || data.shift != 'No' || data.epilepsy != 'No' || data.bipolar != 'No' || data.chronic_pain != 'No'){
+                    $vm.load_module_v2(m.prefix + 'screen-failure-thank-you-page', '', {});
+                }
+                else {
+                    $vm.load_module_v2(m.prefix + 'pis-form', '', {p_uid:m.input.p_uid});
+                }
+            }
+            //--------------------------------------------------------
+            $('#D__ID').css('min-height', $vm.min_height);
+            //--------------------------------------------------------
+        }
+    </script>
+    <style>
+        VmInclude:__CURRENT_PATH__/wappsystem-form.css 
+        #D__ID {
+            height: 100%;
+            animation: vm_module_fadein 1.0s;
+            overflow: auto;
+        }
+    </style>
+</div>

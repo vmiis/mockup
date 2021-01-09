@@ -1,0 +1,109 @@
+﻿<div id=D__ID>
+	<div id=form_container__ID bp=576 style='display:flow-root;'>
+		<div id=header__ID>
+			Enquiry
+		</div>
+		<form id=F__ID >
+			<div>
+				<div w='100|50'>
+					<span>First name</span>
+					<input type="text" class="form-control" name=First_name />
+				</div>
+				<div w='100|50'>
+					<span>Last name</span>
+					<input type="text" class="form-control" name=Last_name />
+				</div>
+			</div>
+			<div>
+				<div w='100|33.333'>
+					<span>Title</span>
+					<select class="form-control" name="Title" >
+						<option></option>
+						<option value="Miss">Miss</option>
+						<option value="Ms">Ms</option>
+						<option value="Mrs">Mrs</option>
+						<option value="Mr">Mr</option>
+						<option value="Dr">Dr</option>
+					</select>
+				</div>
+				<div w='100|66.666'>
+					<span>Occupation</span>
+					<input type="text" class="form-control" name=Occupation />
+				</div>
+			</div>
+			<div>
+				<div w='100|100'>
+					<span>Email</span>
+					<input type="email" class="form-control" name=Email />
+				</div>
+			</div>
+			<div>
+				<div w='100|100'>
+					<span>Enquire type</span>
+					<select class="form-control" name="Enquire_type" >
+						<option></option>
+						<option value="Pricing levels">Pricing levels</option>
+						<option value="Maintenance">Maintenance</option>
+						<option value="Testing">Testing</option>
+						<option value="Complaints">Complaints</option>
+					</select>
+				</div>
+			</div>
+			<div>
+				<div w='100|100'>
+					<span>Details</span>
+					<textarea class="form-control" style="height:150px" name=Details ></textarea>
+				</div>
+			</div>
+			<div>
+				<div w='100|50'>
+					<span>Contact by phone</span>
+					<br>
+					<div style='padding-left:30px'>
+						<label><input type="radio" name="Contact_by_phone" value="Yes"> Yes</label>
+						<label><input type="radio" name="Contact_by_phone" value="No"> No</label>
+					</div>
+				</div>
+				<div w='100|50'>
+					<span>Phone</span>
+					<input type="phone" class="form-control" name=Phone />
+				</div>
+			</div>
+			<div>
+				<div w='100|100'>
+					<button id=submit__ID type="submit" class="btn btn-secondary">Submit</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	VmInclude:__COMPONENT__/m/model.01.html
+    <script>
+    	function F__ID(){
+    		//-------------------------------------
+            VmInclude:__COMPONENT__/f/form.01.js
+    		//-------------------------------------
+			new ResizeObserver($vm.responsive).observe(form_container__ID);
+    	}
+    </script>
+    <style>
+		#form_container__ID{
+			max-width:700px;
+		}
+		
+
+
+		
+		#F__ID > div{
+			padding:6px 5px;
+		}
+		#F__ID > div:hover{
+    		background-color: #ddd;
+		}
+		#F__ID > div div{
+			padding: 0px 15px;
+		}
+		
+		VmInclude:__COMPONENT__/f/form.01.css
+
+    </style>
+</div>

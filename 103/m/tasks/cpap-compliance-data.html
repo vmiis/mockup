@@ -1,0 +1,32 @@
+<div id=D__ID>
+    <div>
+        VmInclude:__COMPONENT__/g/grid.01.html
+    </div>
+    <script>
+        function F__ID(){
+            //-------------------------------------
+            VmInclude:__COMPONENT__/g/grid.01.js
+            VmInclude:__CURRENT_PATH__/task-data.js
+            //-------------------------------------
+            var fields="Days_with_Device_Usage,\
+                        Days_without_Device_Usage,\
+                        Percent_Days_with_Device_Usage,\
+                        Cumulative_Usage,\
+                        Average_Usage_All_Days,\
+                        Average_Usage_Days_Used,\
+                        above_4_hours,\
+                        below_4_hours\
+            ";
+                        //Percent_of_Days_with_Usage_4_Hours(will be removed)|Percent_of_Days_with_Usage_4_Hours,\
+                        //Percent_of_Days_with_Usage_4_Hours(will be removed)|Percent_of_Days_with_Usage_4_Hours\
+            fields=fields.replace(/\t/g,'').replace(/ /g,'');
+            m.fields="_Form,Status|S3,Notes|NT,Participant_ID|Participant_uid,Participant,"+fields+",Submit_date,Submitted_by,_Delete";
+            m.fields_e="Participant_ID|Participant_uid,"+fields
+            //-------------------------------------
+        }
+    </script>
+    <style>
+        VmInclude:__COMPONENT__/g/grid.01.css
+    </style>
+</div>
+

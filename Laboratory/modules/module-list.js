@@ -13,6 +13,10 @@
     var prefix='';
     var $H=$vm.hosting_path+"/modules";
     var modules={
+        "management":{
+            url:$H+"/panels/management.html",
+            description:"panel"
+        },
         "communal-ordering-data-self":{
             title:'My communal ordering records',
             url:$H+"/communal-ordering/record/data.html",

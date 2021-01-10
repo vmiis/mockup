@@ -67,128 +67,6 @@
                 $vm.show_user();
             })
             //------------------------------------
-        }
-        /*
-        function F__ID(){
-            $('#auth__ID').attr('src',$vm.api_address+"auth.html")
-            //--------------------------------------
-            $vm.header_ready=1;
-            if($vm.resize_content!=undefined) $vm.resize_content();
-            //--------------------------------------
-            $('#D__ID a').on('click',function(e){
-                e.preventDefault();
-                e.stopPropagation();
-                var module_name=$(this).attr('href').replace('?\/','');
-                var w=$(this).attr('w');
-                if(w==1){
-                    window.open(module_name);
-                    return;
-                }
-                if(module_name=='dropdown'){
-                    var w=$(this).closest('li').width();
-                    var mh=$(this).closest('li').find('ul').first().css('max-height');
-                    if(mh=='0px'){
-                        close_all_dropdown();
-                        $(this).closest('li').find('ul').first().css('max-height','600px');
-                    }
-                    else $(this).closest('li').find('ul').first().css('max-height','0px');
-                    $(this).closest('li').find('ul').first().css('min-width',w+'px');
-                    return;
-                }
-                if(module_name!="") $vm.show_module(module_name,{})
-                close_all_dropdown();
-                $('#hamburger__ID').prop("checked", false);
-            })
-            //---------------------------------------------------------------
-            $('#hamburger__ID').on('change',function(e){
-                if($(this).prop("checked")==false) close_all_dropdown();
-            })
-            //---------------------------------------------------------------
-            $('body').on('click',function(){
-                close_all_dropdown();
-            })
-            $('#menu__ID>ul>li>a').on('mouseover',function(e){
-                //close_all_dropdown();
-            })
-            //---------------------------------------------------------------
-            $('#menu__ID>ul>li>ul').on('mouseleave',function(e){
-                close_all_dropdown();
-            })
-            //---------------------------------------------------------------
-            var close_all_dropdown=function(){
-                $('#D__ID ul').each(function(){
-                    if($(this).css('max-height')=='600px') $(this).css('max-height','0px');
-                })
-            }
-            //---------------------------------------------------------------
-            $('#search_box__ID').focus(function(){$('#search_box__ID').autocomplete("search","");});
-            $('#search_box__ID').autocomplete({
-                minLength:0,
-                source:function(request,response){
-                    var result=$vm.flexindex.search(request.term);
-                    var r=[]; 
-                    for(var i=0; i<result.length && i<35; i++){
-                        var t=result[i].title; if(t=="") t=result[i].id;
-                        t=t.replace(/-/g,' ').replace(/_/g,' ')
-                        r.push({label:t,value:result[i].id})
-                    }
-                    response(r);
-                },
-                select: function(event,ui){
-                    if(ui.item.value!='') $vm.show_module(ui.item.value,{})
-                    ui.item.value='';
-                }
-            })
-            //--------------------------------------
-            $('#signin__ID').on('click',function(){
-                $vm.m365_signin();  
-            })
-            //------------------------------------
-            $('#signout__ID').on('click',function(){
-                $vm.clear_token();
-                $vm.user_name="";
-                $vm.m365_signout();  
-                //$vm.show_user();
-                location.reload();
-            })
-            //------------------------------------
-            $vm.show_user=function(){
-                if($vm.user_name==undefined || $vm.user_name=='guest'){
-                    $('#username__ID').text('');
-                    $('#signin__ID').show();
-                    $('#signout__ID').hide();
-                }
-                else{
-                    $('#username__ID').text('Welcome '+ $vm.displayname);
-                    $('#signin__ID').hide();
-                    $('#signout__ID').show();
-                }
-            }
-            //------------------------------------
-            $vm.exchange_microsoft_token=function(){
-                if($vm.microsoft_token!=undefined){
-                    $vm.request({cmd:'exchange-microsoft-token',token:$vm.microsoft_token},function(res){
-                        if(res.status=='ok'){
-                            $vm.user_name=res.result.user_name;
-                            $vm.displayname=res.result.displayname;
-                            $vm.set_token(res.result.token,res.result.username);
-                            $vm.show_user();
-                            var t=JSON.parse(res.result.token.split('|')[0]);
-                            $vm.groups=t.groups;
-                        }
-                    })
-                }
-            }
-            //------------------------------------
-            $vm.app_after_3rd_signin=function(){
-                $vm.exchange_microsoft_token();
-            }
-            //------------------------------------
-            $vm.init(function(){
-                $vm.init_status=1;
-                $vm.show_user();
-            })
-            //------------------------------------
             $vm.sys_nav_path=function(){
                 var L=$vm.page_stack.length;
                 var I=L-5;
@@ -216,8 +94,6 @@
             }
             //------------------------------------
         }
-        //--------------------------------------
-        */
     </script>
     <style>
         #D__ID{

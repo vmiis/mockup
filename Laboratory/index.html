@@ -13,7 +13,6 @@
         <script src="https://json-viewer.vmiis.com/json-viewer/jquery.json-viewer.js"></script>
         <script src="https://alcdn.msauth.net/browser/2.8.0/js/msal-browser.min.js"></script>        
         <script>$vm={};</script>
-        <script src="microsoft\msal.js"></script>
     </head>
     <body>
         <div id=layout1>
@@ -35,7 +34,6 @@
                 header:{url:$vm.hosting_path+"/modules/site/header.html",description:"logo, menu, login/logout etc"},
                 footer:{url:$vm.hosting_path+"/modules/site/footer.html",description:"copyright info, links etc"},
                 home:{url:$vm.hosting_path+"/modules/site/home.html",router:1,description:"Modular distributed microservices web application."},
-                management:{url:$vm.hosting_path+"/modules/site/management.html",description:"panel"},
             }
             //---------------------------------------------
             $vm.first_module='home';

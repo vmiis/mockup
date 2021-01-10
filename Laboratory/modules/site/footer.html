@@ -1,7 +1,7 @@
 <div id=D__ID>
     <div>
         <a style='color: #fff'>
-            Laboratory 2021
+            Laboratory <label id=year__ID></label>
         </a>
     </div>
     <script>
@@ -17,6 +17,7 @@
                 }
             }
 	    });
+        $('#year__ID').text(new Date().getFullYear());
     </script>
     <style>
         #D__ID{

@@ -1,0 +1,187 @@
+﻿<section>
+    VmInclude:__COMPONENT__/g/grid.01.html
+</section>
+<script>
+    function F__ID(){
+        //-------------------------------------
+        VmInclude:__COMPONENT__/g/grid.01.js
+        //-------------------------------------
+        var fields=`
+            First_Name, 
+            Last_Name
+        `;
+        m.fields="_Form,_Record_ID,"+fields+",Submit_date,Submitted_by,_Delete,Status,_Notes,UniKey|UniKey_Task,Access_Card,Computer";
+        //-------------------------------------
+        m.cell_render=function(records,I,field,td){
+            switch(field){
+                case '_Record_ID':
+                    td.html(records[I].UID);
+                    break;
+                case "_Delete":
+                    if(records[I].Data.Status=='Submit') td.html('');
+                    break;
+                case 'UniKey_Task':
+                    if(records[I].Data.Status=='Submit'){
+                        if(records[I].Data[field]=='off')  td.html("<span style='color:#aaa'>Not required</span>");
+                        if(records[I].Data[field]=='on'){
+                            td.html("<u style='cursor:pointer;color:#c54609'>Required</u>");
+                            td.find('u').on('click',function(){
+                                $vm.show_module(m.task_unikey_module,{UID:records[I].UID, goback:1});
+                            });
+                        }
+                    }
+                    else{
+                        if(records[I].Data[field]=='on'){
+                            td.html("Required");
+                        }
+                        else if(records[I].Data[field]=='off'){
+                            td.html("");
+                        }
+                    }
+                    break;
+                case 'Access_Card':
+                    if(records[I].Data.Status=='Submit'){
+                        if(records[I].Data[field]=='off')  td.html("<span style='color:#aaa'>Not required</span>");
+                        if(records[I].Data[field]=='on'){
+                            td.html("<u style='cursor:pointer;color:#c54609'>Required</u>");
+                            td.find('u').on('click',function(){
+                                $vm.show_module(m.task_access_card_module,{UID:records[I].UID, goback:1});
+                            });
+                        }
+                    }
+                    else{
+                        if(records[I].Data[field]=='on'){
+                            td.html("Required");
+                        }
+                        else if(records[I].Data[field]=='off'){
+                            td.html("");
+                        }
+                    }
+                    break;
+                case 'Computer':
+                    if(records[I].Data.Status=='Submit'){
+                        if(records[I].Data[field]=='off')  td.html("<span style='color:#aaa'>Not required</span>");
+                        if(records[I].Data[field]=='on'){
+                            td.html("<u style='cursor:pointer;color:#c54609'>Required</u>");
+                            td.find('u').on('click',function(){
+                                $vm.show_module(m.task_computer_module,{UID:records[I].UID, goback:1});
+                            });
+                        }
+                    }
+                    else{
+                        if(records[I].Data[field]=='on'){
+                            td.html("Required");
+                        }
+                        else if(records[I].Data[field]=='off'){
+                            td.html("");
+                        }
+                    }
+                    break;
+                case '_Notes':
+                    td.html("<u style='cursor:pointer'>Notes (0)</u>");
+                    td.find('u').on('click',function(){
+                        $vm.show_module(m.notes_module,{UID:records[I].UID,goback:1})
+                    });
+                    break;
+            }
+        }
+        //-------------------------------------
+        m.data_process=function(){
+            var uid_array=[];
+            for(var i=0;i<m.records.length;i++){
+                uid_array.push(m.records[i].UID)
+            }
+            var query={ I2: { $in: uid_array } }
+            //--------------------------------------------------------
+            //load joined approval records parent.UID=child.I2
+            var cmd="find"; 
+            var req={cmd:cmd,table:m.task_unikey_table,query:query}
+            $vm.request(req,function(res){
+                if(res.result.length!=undefined){
+                    for(var k=0;k<res.result.length;k++){
+                        for(var j=0;j<m.records.length;j++){
+                            if(m.records[j].UID==res.result[k].I2){
+                                m.records[j].sys_temp_1=res.result[k];
+                                break;
+                            }
+                        }
+                    }
+                }
+                //rendering the Approved_by column
+                $("#grid__ID td[data-id=UniKey_Task]").each(function(index){
+                    if(m.records[index].sys_temp_1!=undefined){
+                        var t="Processed by "+m.records[index].sys_temp_1.Submitted_by+" on "+new Date(m.records[index].sys_temp_1.Submit_date).toLocaleDateString();
+                        $(this).html("<i rid="+index+" style='color:green;padding-left:10px;cursor:pointer' class='fas fa-check' title='"+t+"'></i>");
+                        $(this).find('i').on('click',function(){
+                            var k=parseInt($(this).attr('rid'));
+                            $vm.show_module(m.task_unikey_module,{record:m.records[k].sys_temp_1});
+                        })
+                    }
+                });
+            });
+            //--------------------------------------------------------
+            //load joined approval records parent.UID=child.I2
+            var cmd="find"; 
+            var req={cmd:cmd,table:m.task_access_card_table,query:query}
+            $vm.request(req,function(res){
+                if(res.result.length!=undefined){
+                    for(var k=0;k<res.result.length;k++){
+                        for(var j=0;j<m.records.length;j++){
+                            if(m.records[j].UID==res.result[k].I2){
+                                m.records[j].sys_temp_2=res.result[k];
+                                break;
+                            }
+                        }
+                    }
+                }
+                //rendering the Approved_by column
+                $("#grid__ID td[data-id=Access_Card]").each(function(index){
+                    if(m.records[index].sys_temp_2!=undefined){
+                        var t="Done by "+m.records[index].sys_temp_2.Submitted_by+" on "+new Date(m.records[index].sys_temp_2.Submit_date).toLocaleDateString();
+                        $(this).html("<i rid="+index+" style='color:green;padding-left:10px;cursor:pointer' class='fas fa-check' title='"+t+"'></i>");
+                        $(this).find('i').on('click',function(){
+                            var k=parseInt($(this).attr('rid'));
+                            $vm.show_module(m.task_access_card_module,{record:m.records[k].sys_temp_2});
+                        })
+                    }
+                });
+            });
+            //--------------------------------------------------------
+            var cmd="group"; //find follow up
+            var pipeline=[{ $group : {_id:"$I2", count:{$sum:1}}}];
+            var req={cmd:cmd,table:m.notes_table,pipeline:pipeline}
+            $vm.request(req,function(res){
+                //console.log(res.result)
+                if(res.result.length!=undefined){
+                    for(var k=0;k<res.result.length;k++){
+                        for(var j=0;j<m.records.length;j++){
+                            if(m.records[j].UID==res.result[k]._id){
+                                m.records[j].sys_notes=res.result[k];
+                                break;
+                            }
+                        }
+                    }
+                }
+                //rendering the Notes column
+                $("#grid__ID td[data-id=_Notes]").each(function(index){
+                    if(m.records[index].sys_notes!=undefined){
+                        $(this).html("<u style='cursor:pointer'>Notes ("+m.records[index].sys_notes.count+")</u>");
+                        $(this).find('u').on('click',function(){
+                            $vm.show_module(m.notes_module,{UID:m.records[index].UID})
+                        })
+                    }
+                });
+            });
+            //--------------------------------------------------------
+        }
+        //-------------------------------------
+
+
+    }
+</script>
+<style>
+    #nav__ID a{
+        text-decoration-line: underline;
+    }
+    VmInclude:__COMPONENT__/g/grid.01.css
+</style>

@@ -30,10 +30,10 @@
             $vm.hosting_path=window.location.href.substring(0, window.location.href.split('?')[0].lastIndexOf('/'));
             //---------------------------------------------
             $vm.module_list={
-                index:  {url:$vm.hosting_path+"/index.html",description:"main entry, layout, module list setup"},
-                header: {url:$vm.hosting_path+"/modules/site/header.html",description:"logo, menu, login/logout etc"},
-                footer: {url:$vm.hosting_path+"/modules/site/footer.html",description:"copyright info, links etc"},
-                home:   {url:$vm.hosting_path+"/modules/site/home.html",router:1,description:"Modular distributed microservices web application."},
+                index:{url:$vm.hosting_path+"/index.html",description:"main entry, layout, module list setup"},
+                header:{url:$vm.hosting_path+"/modules/site/header.html",description:"logo, menu, login/logout etc"},
+                footer:{url:$vm.hosting_path+"/modules/site/footer.html",description:"copyright info, links etc"},
+                home:{url:$vm.hosting_path+"/modules/site/home.html",router:1,description:"Modular distributed microservices web application."},
             }
             //---------------------------------------------
             $vm.first_module='home';
@@ -211,7 +211,7 @@
                 }
             }
             body{background-size: cover; background-repeat: repeat-x; background-position: center top; background-attachment: fixed;}
-            .body_background_default{ background-image: url(https://images.unsplash.com/photo-1533424922832-a76b7d3563d7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80);}
+            .body_background_default{ background-image: url(https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80);}
         </style>
         <!----------------------------------------------->
     </body>

@@ -1,0 +1,117 @@
+﻿<div id=D__ID>
+    <section id=form_container__ID bp=576 style='display:flow-root;'>
+    	<div id=header__ID>
+    		New Starter
+    	</div>
+    	<form id=F__ID>
+			<div>
+				<div w='100|50'>
+					<span><b>First Name</b></span>
+					<input type="text" name=First_Name required />
+				</div>
+				<div w='100|50'>
+					<span><b>Last Name</b></span>
+					<input type=text name=Last_Name required ></input>
+				</div>
+			</div>
+			<div>
+				<div w='100|50'>
+					<span><b>Date of Birth</b></span>
+					<input type=date name=Date_of_Birth ></input>
+				</div>
+				<div w='100|50'>
+					<span><b>Starting Date</b></span>
+					<input type=date name=Starting_Date ></input>
+				</div>
+			</div>
+			<div>
+				<div w='100|100'>
+					<span><b>Unikey (if it exists)</b></span>
+					<input type=text name=Unikey ></input>
+				</div>
+			</div>
+			<div>
+				<div w='100|33.3'>
+					<span><b>Manager(Supervisor)</b></span>
+					<input type=text name=Manager ></input>
+				</div>
+				<div w='100|33.3'>
+					<span><b>Group</b></span>
+					<input type=text name=Group ></input>
+				</div>
+				<div w='100|33.3'>
+					<span><b>Position</b></span>
+					<input type=text name=Position ></input>
+				</div>
+			</div>
+			<div>
+				<div w='100|100'>
+					<span><b>Task List</b></span><br><br>
+					<ul style='list-style-type:none'>
+						<li><label class=c__ID><input type="checkbox" name=UniKey_Task  /><span></span> UniKey</label></li>						
+						<li><label class=c__ID><input type="checkbox" name=Access_Card  /><span></span> Access Card</label></li>
+						<li><label class=c__ID><input type="checkbox" name=Computer  /><span></span> Computer</label></li>
+					</ul>
+				</div>
+			</div>
+			<section style='display:none'>
+				<input type="text" name=Status  />
+			</section>
+			<div>
+				<div w='100|100'>
+					<button id=draft__ID type="button" class="btn btn-secondary">Save and Return Later</button>
+					<button id=submit__ID type="button" class="btn btn-secondary">Submit</button>
+					<button id=trigger__ID style='display:none'></button>
+				</div>
+			</div>
+    	</form>
+    </section>
+	VmInclude:__COMPONENT__/m/model.01.html
+    <script>
+    	function F__ID(){
+    		//-------------------------------------
+			VmInclude:__COMPONENT__/f/form.01.js
+			new ResizeObserver($vm.responsive).observe(form_container__ID);
+			m.storage_type='s0';
+			//-------------------------------------
+			var old_m_load=m.load;
+			m.load=function(){
+				old_m_load();
+				if(m.input.record!=undefined && m.input.record.Data.Status=="Submit"){
+					$('#draft__ID').hide();
+					$('#submit__ID').hide();
+				}
+			}      
+			$('#draft__ID').on('click',function(){	$("#F__ID input[name='Status']").val('Draft');  m.options.lock=0; $('#trigger__ID').trigger( "click" ); })
+			$('#submit__ID').on('click',function(){	$("#F__ID input[name='Status']").val('Submit'); m.options.lock=1; $('#trigger__ID').trigger( "click" ); })
+			//-------------------------------------
+			m.after_insert=function(data,res){
+				if(data.Status=='Submit'){
+					/*
+					var req={cmd:'flow',flowid:'flow_lab_order_submitted',data:data}
+					$vm.request(req,function(res){
+					*/
+						$vm.refresh=1;
+						m.change_status++;
+						if(m.input.goback!=undefined) window.history.go(-1);            //from grid
+						else $vm.alert('Your data has been successfully submitted');    //standalone
+					//});
+				}
+				else{
+					$vm.refresh=1;
+					m.change_status++;
+					if(m.input.goback!=undefined) window.history.go(-1);            //from grid
+					else $vm.alert('Your data has been successfully saved');    //standalone
+				}
+			}
+			//-------------------------------------
+		}
+    </script>
+    <style>
+        #form_container__ID{
+            max-width:900px;
+        }
+		VmInclude:__CURRENT_PATH__style.css
+		VmInclude:__COMPONENT__/f/form.01.css
+    </style>
+</div>

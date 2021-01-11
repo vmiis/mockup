@@ -3,12 +3,12 @@ const url = require('url');
 const fs = require('fs');
 const path = require('path');
 
-const baseDir = path.join(__dirname, './');
+const baseDir = path.join(__dirname, '../');
 const httpServer = http.createServer((request, response) => {
     if(request.method=='GET'){
         const parsedUrl = url.parse(request.url, true);
         let pathName = parsedUrl.pathname;
-        if(pathName.endsWith("/")) pathName=pathName+'/index.html';
+        if(pathName.endsWith("/")) pathName=pathName+'index.html';
         console.log(pathName)    
         const responseContentType = getContentType(pathName);
         response.setHeader('Content-Type', responseContentType);
@@ -22,33 +22,6 @@ const httpServer = http.createServer((request, response) => {
                 response.end('404 - File Not Found');
             }
         });
-    }
-    else if(request.method=='POST'){
-        var r_data='';
-        request.on('data',function(data){
-          r_data+=data;
-        });
-        request.on('end',function(){
-            d=JSON.parse(r_data);
-            var password=d.password;
-            if(password_for_file_saving!="" && password_for_file_saving==password){
-                fs.writeFile(baseDir+"/"+d.path, d.content, function (err) {
-                    if (err) {
-                        console.log(err);
-                        response.writeHead(200);
-                        response.end(err.toString());
-                    }                            
-                    else{
-                        response.writeHead(200);
-                        response.end("Saved");
-                    }
-                });
-            }
-            else{
-                response.writeHead(200);
-                response.end("Incorrect password");
-            }
-        })
     }
     else{
         response.writeHead(405);
@@ -74,7 +47,6 @@ const getContentType = pathName => {
     }
     return contentType;
 };
-var password_for_file_saving=process.env['password_for_file_saving'];;
 httpServer.listen(process.env.PORT, () => {
     console.log('\x1b[32m%s\x1b[0m', `Server is running at http://localhost:${httpServer.address().port}`);
 });

@@ -1,218 +1,158 @@
 ﻿<div id=D__ID>
-    <section id=form_container__ID>
+    <section id=form_container__ID bp=576 style='display:flow-root;'>
     	<div id=header__ID>
     		Communal ordering form
     	</div>
     	<form id=F__ID>
-			<div>
-				<div w='100|100'>
-					<span>1. Full name of the requestor</span>
-					<input type="text" name=Requestor_Name required />
+			<div id=F_1__ID>
+				<div>
+					<div w='100|50'>
+						<span>Full name of the requestor</span>
+						<input type="text" name=Requestor_Name required />
+					</div>
+					<div w='100|50'>
+						<span>Email of the requestor</span>
+						<input type="email" name=Requestor_Email required />
+					</div>
+				</div>
+				<div>
+					<div w='100|50'>
+						<span>Supplier Name</span>
+						<select name=Supplier_Name id=supplier__ID></select>
+					</div>
+					<div w='100|50'>
+						<span>Supplier Email</span>
+						<input type=email name=Supplier_Email />
+					</div>
+					<div w='100|50'>
+						<span>Supplier Phone</span>
+						<input type=text name=Supplier_Phone />
+					</div>
+					<div w='100|50'>
+						<span>Supplier Account_Number</span>
+						<input type=text name=Supplier_Account_Number />
+					</div>
+				</div>
+				<div>
+					<div w='100|50'>
+						<span>Supervisor Name</span>
+						<select name=Supervisor_Name id=supervisor__ID></select>
+					</div>
+					<div w='100|50'>
+						<span>Supervisor Email</span>
+						<input type=email name=Supervisor_Email />
+					</div>
+					<div w='100|50'>
+						<span>Group</span>
+						<input type=text name=Supervisor_Group />
+					</div>
+					<div w='100|50'>
+						<span>Project Code</span>
+						<input type=text name=Project_Code />
+					</div>
+				</div>
+				<div>
+					<div w='100|100'>
+						<span>Quotation</span>
+						<div class="form-control" style='height: 80px;'>
+                            <u style='cursor:pointer' id=link_Quotation__ID></u>
+                            <br>
+                            <input type="file" name=Quotation style="margin-top:6px" /> <button class=c_print type="button" id=x_Quotation__ID style='margin-left:30px'>Remove</button>
+                        </div>
+    				</div>
 				</div>
 			</div>
+			<hr style="border-top: 1px solid #888;width: 100%;margin:10px 0">
 			<div>
 				<div w='100|100'>
-					<span>2. Email the requestor</span>
-					<input type="email" name=Requestor_Email required />
-				</div>
-			</div>
-			<div>
-				<div w='100|100'>
-					<span>3. Date Requested</span>
-					<input type=date name=Date ></input>
-				</div>
-			</div>
-			<div>
-				<div w='100|100'>
-					<span>4. What are you requesting</span><br>
-					<div style="padding-left:20px" id=c__ID>
-						<label class=r__ID><input type=radio name=Type value=Chemical required></input><span></span> Chemical</label><br>
-						<label class=r__ID><input type=radio name=Type value=Consumable></input><span></span> Consumable</label>
+					<u class=c_print style='cursor:pointer;margin-bottom:3px;display:inline-block' id=item_a_add__ID><i class="fa fa-plus"></i> Add an item</u>
+					<table id=grid_item_a__ID></table>
+					<div id=total__ID style='text-align: right;padding-top:6px'>
+							GST Amount: <input type=text name=GST_Amount style="width:120px;margin-bottom:1px" readonly><br>
+							Total Amount: <input type=text name=Total_Amount style="width:120px" readonly>
 					</div>
 				</div>
 			</div>
-			<section id=part_1__ID style='display:none'>
-				<div>
-					<div w='100|100'>
-						<span>5. Chemical requested</span>
-						<select name=Chemical_requested>
-							<option value="" disabled selected>Select your answer</option>
-							<option>Glacial acetic acid</option>
-							<option>Agarose (Molecular Biology Grade)</option>
-							<option>APS (ammonium persulfate)</option>
-							<option>Beta Mercaptoethanol</option>
-							<option>Calcium Chloride</option>
-							<option>Citric acid</option>
-							<option>Conc HCl (molecular biology grade)</option>
-							<option>D (+) Glucose monohydrate</option>
-							<option>D (+) Galactose</option>
-							<option>Dextrandi-sodium hydrogen orthophosphate</option>
-							<option>EDTA</option>
-							<option>100% Ethanol (molecular biology grade)</option>
-							<option>Ethylene glycolGelatin</option>
-							<option>GlycineGuanidine hydrochloride</option>
-							<option>HEPES</option>
-							<option>Hydroxyethyl cellulose</option>
-							<option>Hydroxypropyl cellulose</option>
-							<option>Hydroxypropyl methyl cellulose</option>
-							<option>Imidazole</option>
-							<option>Isopropanol (Mol Bio Grade)</option>
-							<option>Magnesium chloride (Anhydrous)</option>
-							<option>Methanol (molecular biology grade)</option>
-							<option>Methyl Cellulose</option>
-							<option>Phenylmethylsulfonyl fluoride</option>
-							<option>Sodium phosphate (Dibasics - Molecular biology grade)</option>
-							<option>Phosphate buffered Saline (PBS)</option>
-							<option>Postassium chloride</option>
-							<option>Sodium biocarbonate (Molecular biology grade - powder)</option>
-							<option>Sodium carbonate</option>
-							<option>Sodium chloride</option>
-						</select>
-					</div>
-				</div>
-				<div>
-					<div w='100|100'>
-						<span>6. Quantity requested</span>
-						<br><span style='font-size: 11px; font-style: italic;'>Please mention number of bags / carton for consumables and volume / weight of chemicals</span>
-						<input type="text" name=Quantity_requested />
-					</div>
-				</div>
-				<div>
-					<div w='100|100'>
-						<span>7. Preferred supplier</span>
-						<br><span style='font-size: 11px; font-style: italic;'>Please write NA if no preference</span>
-						<input type="text" name=Preferred_supplier />
-					</div>
-				</div>
-				<div>
-					<div w='100|100'>
-						<span>8. Notes</span>
-						<textarea name=Notes style='height:200px' ></textarea>
-					</div>
-				</div>
-			</section>
-			<section id=part_2__ID style='display:none'>
-				<div>
-					<div w='100|100'>
-						<span>5. Consumable requested</span>
-						<select name=Consumable_requested >
-							<option value="" disabled selected>Select your answer</option>
-							<option>1.5mL Eppendorf tube</option>
-							<option>15mL Falcon tube</option>
-							<option>50mL Falcon tube</option>
-							<option>5mL serological pipette</option>
-							<option>10mL serological pipette</option>
-							<option>25mL serological pipette</option>
-						</select>
-					</div>
-				</div>
-			</section>
 			<section style='display:none'>
 				<input type="text" name=Status  />
 			</section>
 			<div>
-				<div w='100|100'>
+				<div w='100|100' class=c_print>
 					<button id=draft__ID type="button" class="btn btn-secondary">Save and Return Later</button>
 					<button id=submit__ID type="button" class="btn btn-secondary">Submit</button>
-					<button id=trigger__ID style='display:none'></button>
+    				<!--<button id=pdf1__ID type="button" class="btn btn-secondary">PDF</button>-->
+					<div style='display:none'><button id=trigger__ID></button></div>
 				</div>
 			</div>
     	</form>
-    </section>
+	</section>
+	<div id=image__ID></div>
+	VmInclude:__COMPONENT__/m/model.01.html
     <script>
     	function F__ID(){
     		//-------------------------------------
-			VmInclude:__COMPONENT__/f/form.01.js
+			//VmInclude:__COMPONENT__/f/form.01.js
+            //VmInclude:__COMPONENT__/f/form-item-a.01.js
+            //VmInclude:__CURRENT_PATH__form.html.drop_down_list.js
+            //VmInclude:__CURRENT_PATH__form.html.item_a_list.js
+            //VmInclude:__CURRENT_PATH__form.html.pdf_data.js
+            //VmInclude:__CURRENT_PATH__../emails/form.html.send_email.js
 			new ResizeObserver($vm.responsive).observe(form_container__ID);
-			m.storage_type=='s0'
+			m.storage_type='s0';
+			item_a_list();
 			//-------------------------------------
 			var old_m_load=m.load;
 			m.load=function(){
-				/*
-				if($vm.user_name=="guest"){
-					alert("You haven't login.");
-					return;
+				if( $('#supplier__ID').html()=='' || $('#supervisor__ID').html()=='' ){
+					drop_down_list();
 				}
-				*/
 				old_m_load();
 				if(m.input.record!=undefined && m.input.record.Data.Status=="Submit"){
 					$('#draft__ID').hide();
 					$('#submit__ID').hide();
 				}
-				if(m.input.record!=undefined){
-					var v=$('#F__ID input[name=Type]:checked').val();
-					if(v=="Chemical"){ 
-						$('#part_1__ID').show(); $('#part_2__ID').hide(); 
-						$("#part_1__ID select").prop("required",true);
-						$("#part_1__ID input").prop("required",true);
-						$("#part_2__ID select").prop("required",false);
-					}
-					if(v=="Consumable"){ 
-						$('#part_2__ID').show(); $('#part_1__ID').hide(); 
-						$("#part_1__ID select").prop("required",false);
-						$("#part_1__ID input").prop("required",false);
-						$("#part_2__ID select").prop("required",true);
-					}
-				}
+                m.set_file_link_s0("Quotation");
+				item_a_render();
 			}      
+			//-------------------------------------
 			$('#draft__ID').on('click',function(){	$("#F__ID input[name='Status']").val('Draft');  m.options.lock=0; $('#trigger__ID').trigger( "click" ); })
 			$('#submit__ID').on('click',function(){	$("#F__ID input[name='Status']").val('Submit'); m.options.lock=1; $('#trigger__ID').trigger( "click" ); })
 			//-------------------------------------
             m.before_submit=function(data,index){
-				if(m.input.record==undefined){ //only for add
-					index.A=$vm.user_name; 
-				}
+				if(m.input.record==undefined){ 	index.A=$vm.user_name; 	} //only for add
+                data.items=m.item_a_get_data();
                 return true;
             }
 			//-------------------------------------
-			m.after_insert=function(data,res){
-				if(data.Status=='Submit'){
-					var req={cmd:'flow',flowid:'flow_lab_order_submitted',data:data}
-					$vm.request(req,function(res){
-						$vm.refresh=1;
-						m.change_status++;
-						if(m.input.goback!=undefined) window.history.go(-1);            //from grid
-						else $vm.alert('Your data has been successfully submitted');    //standalone
-					});
-				}
-				else{
+			m.after_insert=function(data,res){ after_submit(data,res); }
+			m.after_update=function(data,res){ after_submit(data,res); }
+			var after_submit=function(data,res){
+				var new_data=data;
+				var done=function(){
+					var ret=0,rid=undefined; if(m.input!=undefined && m.input.record!=undefined) rid=m.input.record._id;
+					if(m.input.goback!=undefined || rid!=undefined ) ret=1;	
 					$vm.refresh=1;
 					m.change_status++;
-					if(m.input.goback!=undefined) window.history.go(-1);            //from grid
-					else $vm.alert('Your data has been successfully saved');    //standalone
+					if(ret==1) window.history.go(-1);            					//from grid
+					else $vm.alert('Your data has been successfully submitted');    //standalone
 				}
+				//if(data.Status=='Submit'){
+				if(data.Status=='Draft'){
+					var url=$vm.emails['to_lab_manager'];
+					var form="communal-ordering-pdf-form"; if(url.indexOf($vm.api_address)!=-1) form="";
+					send_email(form,new_data,url,function(code){ done();})
+				}
+				else done();
 			}
 			//-------------------------------------
-			$('#c__ID').on('click',function(){
-				var v=$('#F__ID input[name=Type]:checked').val();
-				if(v=="Chemical"){ 
-					$('#part_1__ID').show(); $('#part_2__ID').hide(); 
-					$("#part_1__ID select").prop("required",true);
-					$("#part_1__ID input").prop("required",true);
-					$("#part_2__ID select").prop("required",false);
-				}
-				if(v=="Consumable"){ 
-					$('#part_2__ID').show(); $('#part_1__ID').hide(); 
-					$("#part_1__ID select").prop("required",false);
-					$("#part_1__ID input").prop("required",false);
-					$("#part_2__ID select").prop("required",true);
-				}
-			})
 		}
-    </script>
+	</script>
     <style>
         #form_container__ID{
-            max-width:800px;
+            max-width:1000px;
         }
-		VmInclude:__CURRENT_PATH__form.css
-        VmInclude:__COMPONENT__/f/form.01.css
-		#D__ID{
-			background-size: cover; 
-			background-repeat: repeat-x; 
-			background-position: center top; 
-			background-attachment: fixed;
-			background-image: url("__CURRENT_PATH__form.jpg");
-			background-color: unset;
-		}
+		/*VmInclude:__CURRENT_PATH__form.css*/
+        /*VmInclude:__COMPONENT__/f/form-item-a.01.css*/
+		/*VmInclude:__COMPONENT__/f/form.01.css*/
     </style>
 </div>

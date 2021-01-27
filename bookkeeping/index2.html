@@ -11,16 +11,13 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/FlexSearch/0.6.22/flexsearch.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.6/xlsx.full.min.js"></script>
         <script src="https://json-viewer.vmiis.com/json-viewer/jquery.json-viewer.js"></script>
-        <script src="https://alcdn.msauth.net/browser/2.8.0/js/msal-browser.min.js"></script>        
         <script>$vm={};</script>
     </head>
     <body>
-        <div id=layout1>
+        <div id=layout>
             <div id=header></div>
-            <div id=layout2>
-                <div id=content></div>
-                <div id=footer></div>
-            </div>
+            <div id=content></div>
+            <div id=footer></div>
         </div>
         <!----------------------------------------------->
         <script app code>
@@ -31,9 +28,9 @@
             //---------------------------------------------
             $vm.module_list={
                 index:  {url:$vm.hosting_path+"/index.html",description:"main entry, layout, module list setup"},
-                header: {url:$vm.hosting_path+"/modules/site/header.html",description:"logo, menu, login/logout etc"},
-                footer: {url:$vm.hosting_path+"/modules/site/footer.html",description:"copyright info, links etc"},
-                home:   {url:$vm.hosting_path+"/modules/site/home.html",router:1,description:"Modular distributed microservices web application."},
+                header: {url:$vm.hosting_path+"/modules/site2/header.html",description:"logo, menu, login/logout etc"},
+                footer: {url:$vm.hosting_path+"/modules/site2/footer.html",description:"copyright info, links etc"},
+                home:   {url:$vm.hosting_path+"/modules/site2/home.html",router:1,description:"Modular distributed microservices web application."},
             }
             //---------------------------------------------
             $vm.first_module='home';
@@ -46,7 +43,6 @@
             //VM framework code, do not need to chang the following code in most cases
             $vm.root_layout_content_slot='content'
             $vm.api_address='https://api.wappsystem.com';
-            //$vm.api_address='https://woolcock-azure-mdb.vmiis.com/lab';
             if(window.location.hostname=='127.0.0.1' || window.location.hostname=='localhost'){ 
                 $vm.localhost=true;
             }
@@ -58,11 +54,16 @@
                 var title=$vm.module_list[m_name].url.split('/').pop(); document.title=title+" - "+t ;
                 var info=$vm.module_list[m_name].description;  if(info==undefined) info="Modular distributed microservices web application."; $("meta[name='description']").attr("content", info);
                 if(m_name!="sys_editor") $vm.active_name=m_name;
-                document.getElementById('layout2').scrollTop=$vm.module_list[$vm.active_name].scrollTop;
+                document.getElementById('layout').scrollTop=$vm.module_list[$vm.active_name].scrollTop;
                 if($vm.sys_nav_path!=undefined) $vm.sys_nav_path();
+                
+                if(m_name!=undefined){ $vm.active_id=$vm.module_list[m_name].id; $vm.active_name=m_name; }
+                if($vm.active_id!='') $('#D'+$vm.active_id).css('min-height',$vm.min_height+"px");
+                if(m_name=='home') $("#header").css("background","rgba(0,0,0,0)"); 
+                else               $("#header").css("background","rgba(0,0,0,0.8)"); 
             }
             //---------------------------------------------
-            document.getElementById('layout2').onscroll = function(){
+            document.getElementById('layout').onscroll = function(){
                 $vm.module_list[$vm.active_name].scrollTop=this.scrollTop;
             }
             //---------------------------------------------
@@ -171,6 +172,22 @@
             $("body").addClass('body_background_default');
             $vm.boot(); //start from here
             //=================================================
+            $vm.min_height=$(window).height()-60;
+            $('#content').css('min-height',$vm.min_height);
+            $('#content').css('padding-top',60);
+            $(window).on('scroll', function() {
+            if($vm.active_name=='home'){
+                var y=-$(window).scrollTop()/2;
+                $('body').css({ 'background-position-y': y+'px'});
+                var r=-y/100; if(r>0.5) r=0.5;
+                $("#header").css("background","rgba(0,0,0,"+r+")");
+            }
+            //=================================================
+        });
+        //-------------------------------------
+
+
+
         </script>
         <!----------------------------------------------->
         <style main style>
@@ -179,16 +196,14 @@
                 padding:0;
                 height:100%;
             }
-            #layout1 {
-                height: 100%;
-                display: grid;
-                grid-template-rows: auto 1fr;
-            }
-            #layout2 {
-                height: 100%;
-                display: grid;
-                grid-template-rows: 1fr auto;
-                overflow:auto;
+            #header{
+                height:60px;
+                position:fixed;
+                top:0;
+                left:0;
+                width:100%;
+                background:rgba(0,0,0,0.6);
+                z-index:10;
             }
             @keyframes vm_module_fadein {
                 from { opacity:0; }
@@ -211,7 +226,7 @@
                 }
             }
             body{background-size: cover; background-repeat: repeat-x; background-position: center top; background-attachment: fixed;}
-            .body_background_default{ background-image: url(https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80);}
+            .body_background_default{ background-image: url(https://images.unsplash.com/photo-1437719417032-8595fd9e9dc6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=80);}
         </style>
         <!----------------------------------------------->
     </body>

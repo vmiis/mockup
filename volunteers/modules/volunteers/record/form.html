@@ -1,0 +1,147 @@
+﻿<div id=D__ID>
+    <section id=form_container__ID bp=576 style='display:flow-root;'>
+    	<div id=header__ID>
+    		Volunteer Form
+    	</div>
+    	<form id=F__ID>
+			<div>
+				<div w='100|50'>
+					<span>First Name</span>
+					<input type="text" name=First_Name required />
+				</div>
+				<div w='100|50'>
+					<span>Last Name</span>
+					<input type="text" name=Last_Name required />
+				</div>
+			</div>
+			<div>
+				<div w='100|50'>
+					<span>Phone</span>
+					<input type="text" name=Phone />
+				</div>
+				<div w='100|50'>
+					<span>Gender</span>
+						<select name=Gender>
+							<option value="" disabled selected>Gender</option>
+							<option>Male</option>
+							<option>Female</option>
+							<option>Indeterminate/Intersex/Unspecified</option>
+						</select>
+				</div>
+			</div>
+			<div>
+				<div w='100|50'>
+					<span>Email</span>
+					<input type=email name=Email ></input>
+				</div>
+				<div w='100|50'>
+					<span>Date of Birth</span>
+					<input type=date name=Date_of_Birth ></input>
+				</div>
+			</div>
+			<div>
+				<div w='100|50'>
+					<span>Postal Code</span>
+					<input type="text" name=Postcode />
+				</div>
+			</div>
+			<hr>
+			<div>
+				<div w='100|50'>
+					<label><input type="checkbox" name=Lung_Cancer /> Lung Cancer</label>
+				</div>
+				<div w='100|50'>
+					<label><input type="checkbox" name=Asthma /> Asthma</label>
+				</div>
+				<div w='100|50'>
+					<label><input type="checkbox" name=COPD  /> COPD (Chronic Obstructive Pulmonary Disease)</label>
+				</div>
+				<div w='100|50'>
+					<label><input type="checkbox" name=Insomnia /> Insomnia</label>
+				</div>
+				<div w='100|50'>
+					<label><input type="checkbox" name=Chronic_Bronchitis /> Chronic Bronchitis</label>
+				</div>
+				<div w='100|50'>
+					<label><input type="checkbox" name=Narcolepsy /> Narcolepsy</label>
+				</div>
+				<div w='100|50'>
+					<label><input type="checkbox" name=Emphysema /> Emphysema</label>
+				</div>
+				<div w='100|50'>
+					<label><input type="checkbox" name=OSA /> Obstructive Sleep Apnoea (OSA)</label>
+				</div>
+				<div w='100|50'>
+					<label><input type="checkbox" name=Rhinitis /> Rhinitis</label>
+				</div>
+				<div w='100|50'>
+					<label><input type="checkbox" name=Restless_Leg_Syndrome /> Restless Leg Syndrome</label>
+				</div>
+				<div w='100|50'>
+					<label><input type="checkbox" name=No /> I do not have a respiratory condition or sleep problem</label>
+				</div>
+			</div>
+			<hr>
+			<div>
+				<div w='100|100'>
+					<span>Registered Study Name</span>
+					<input type="text" name=Study />
+				</div>
+			</div>
+			<hr>
+			<div>
+				<div w='100|100'>
+					<label><input type="checkbox" name=Medical_research /> I agree to be contacted in relation to participating in medical research</label>
+				</div>
+				<div w='100|100'>
+					<label><input type="checkbox" name=Newsletters /> I would like to receive newsletters and updates</label>
+				</div>
+			</div>
+			<div>
+				<div w='100|100'>
+					<button id=submit__ID class="btn btn-secondary">Submit</button>
+				</div>
+			</div>
+    	</form>
+    </section>
+    <script>
+    	function F__ID(){
+    		//-------------------------------------
+			VmInclude:__COMPONENT__/f/form.01.js
+			new ResizeObserver($vm.responsive).observe(form_container__ID);
+			m.storage_type=='s0'
+			//-------------------------------------
+			var old_m_load=m.load;
+			m.load=function(){
+				old_m_load();
+			}      
+			//-------------------------------------
+			/*
+			m.before_submit=function(data,index){
+				var s="";
+				var a=["Lung_Cancer","Asthma","COPD","Insomnia","Chronic_Bronchitis","Narcolepsy","Emphysema","OSA","Rhinitis","Restless_Leg_Syndrome","No"];
+				for(var i=0;i<a.length;i++){
+					if(data[a[i]]=='on') s=s+"1"; else s=s+"0";
+				}
+				index.I2=s;
+				index.I3=new Date(data.Date_of_Birth).toJSON();
+				index.I4=data.Gender;
+				index.I5=data.Postcode;
+				index.I6=data.Study;
+				return true;
+			}
+			*/
+			//-------------------------------------
+		}
+    </script>
+    <style>
+        #form_container__ID{
+            max-width:1000px;
+        }
+		VmInclude:__CURRENT_PATH__form.css
+        VmInclude:__COMPONENT__/f/form.01.css
+		#div1__ID:hover{
+			_background-color: #fff!Important;
+		}
+    </style>
+</div>

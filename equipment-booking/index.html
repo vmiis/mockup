@@ -25,15 +25,15 @@
         <!----------------------------------------------->
         <script app code>
             //---------------------------------------------
-            $VmAPI={};$vm.ver=[0.10,0.03]; $vm['jquery-ui-min-js']=1;
+            $VmAPI={};$vm.ver=[0.07,0.01]; $vm['jquery-ui-min-js']=1;
             $vm.flexindex=new FlexSearch({  doc: {id: "id",field: ["title","contents"]}    });
             $vm.hosting_path=window.location.href.substring(0, window.location.href.split('?')[0].lastIndexOf('/'));
             //---------------------------------------------
             $vm.module_list={
-                index:{url:$vm.hosting_path+"/index.html",description:"main entry, layout, module list setup"},
-                header:{url:$vm.hosting_path+"/modules/site/header.html",description:"logo, menu, login/logout etc"},
-                footer:{url:$vm.hosting_path+"/modules/site/footer.html",description:"copyright info, links etc"},
-                home:{url:$vm.hosting_path+"/modules/site/home.html",router:1,description:"Modular distributed microservices web application."},
+                index:  {url:$vm.hosting_path+"/index.html",description:"main entry, layout, module list setup"},
+                header: {url:$vm.hosting_path+"/modules/site/header.html",description:"logo, menu, login/logout etc"},
+                footer: {url:$vm.hosting_path+"/modules/site/footer.html",description:"copyright info, links etc"},
+                home:   {url:$vm.hosting_path+"/modules/site/home.html",router:1,description:"Modular distributed microservices web application."},
             }
             //---------------------------------------------
             $vm.first_module='home';
@@ -46,6 +46,7 @@
             //VM framework code, do not need to chang the following code in most cases
             $vm.root_layout_content_slot='content'
             $vm.api_address='https://api.wappsystem.com';
+            //$vm.api_address='https://woolcock-azure-mdb.vmiis.com/lab';
             if(window.location.hostname=='127.0.0.1' || window.location.hostname=='localhost'){ 
                 $vm.localhost=true;
             }
@@ -210,7 +211,7 @@
                 }
             }
             body{background-size: cover; background-repeat: repeat-x; background-position: center top; background-attachment: fixed;}
-            .body_background_default{ background-image: url(https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80);}
+            .body_background_default{ background-image: url(https://images.unsplash.com/photo-1471922694854-ff1b63b20054?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80);}
         </style>
         <!----------------------------------------------->
     </body>

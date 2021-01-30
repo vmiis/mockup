@@ -14,7 +14,7 @@
                     <li><a href="?/home"><i class="fa fa-home"></i> Home</a></li>
                     <li><a href="?/panel"><i class="fas fa-table"></i> Bookkeeping</a></li>
                     <li><a href="?/diagram"><i class="fas fa-project-diagram"></i> Diagram</a></li>
-                    <li><a href="https://vmiis.com"><i class="fa fa-info"></i> About</a></li>
+                    <li><a href="https://www.vmiis.com"><i class="fa fa-info"></i> About</a></li>
                     <li><a href="" id=signin__ID onclick=$vm.signin() ><i class="fa fa-user"></i> Sigin</a></li>
                     <li><a href="" id=signout__ID onclick=$vm.signout() ><i class="fa fa-user"></i> Sigout</a></li>
                 </ul>
@@ -43,7 +43,7 @@
                 e.preventDefault();
                 $('#hamburger__ID').prop("checked", false);
                 var module_name=$(this).attr('href').replace('?\/','');
-                if(module_name=='https://vmiis.com'){
+                if(module_name=='https://www.vmiis.com'){
                     window.open(module_name);
                     return;
                 }

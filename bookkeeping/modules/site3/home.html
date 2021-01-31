@@ -43,19 +43,13 @@
                 await osmd.render();
                 await audioPlayer.loadScore(osmd);
                 document.getElementById("btn-play").addEventListener("click", () => {
-                    if (audioPlayer.state === "STOPPED" || audioPlayer.state === "PAUSED") {
-                        audioPlayer.play();
-                    }
+                    audioPlayer.stop();audioPlayer.play();
                 });
                 document.getElementById("btn-pause").addEventListener("click", () => {
-                    if (audioPlayer.state === "PLAYING") {
-                        audioPlayer.pause();
-                    }
+                    audioPlayer.pause();
                 });
                 document.getElementById("btn-stop").addEventListener("click", () => {
-                    if (audioPlayer.state === "PLAYING" || audioPlayer.state === "PAUSED") {
-                        audioPlayer.stop();
-                    }
+                    audioPlayer.stop();
                 });
             };
             $.get(url,function(scoreXml){

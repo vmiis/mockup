@@ -12,9 +12,12 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.6/xlsx.full.min.js"></script>
         <script src="https://json-viewer.vmiis.com/json-viewer/jquery.json-viewer.js"></script>
         <script src="https://alcdn.msauth.net/browser/2.8.0/js/msal-browser.min.js"></script>        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>   
+        <script src="https://unpkg.com/html2canvas@1.0.0-rc.5/dist/html2canvas.js"></script>   
         <script>$vm={};</script>
     </head>
     <body>
+        <div id=_g_canvas style='position:absolute;top:-100000px'></div>
         <div id=layout1>
             <div id=header></div>
             <div id=layout2>
@@ -25,7 +28,7 @@
         <!----------------------------------------------->
         <script app code>
             //---------------------------------------------
-            $VmAPI={};$vm.ver=[0.10,0.03]; $vm['jquery-ui-min-js']=1;
+            $VmAPI={};$vm.ver=[0.11,0.05]; $vm['jquery-ui-min-js']=1;
             $vm.flexindex=new FlexSearch({  doc: {id: "id",field: ["title","contents"]}    });
             $vm.hosting_path=window.location.href.substring(0, window.location.href.split('?')[0].lastIndexOf('/'));
             //---------------------------------------------
@@ -170,6 +173,16 @@
             $("body").addClass('body_background_default');
             $vm.boot(); //start from here
             //=================================================
+
+
+
+
+
+
+
+
+
+
         </script>
         <!----------------------------------------------->
         <style main style>

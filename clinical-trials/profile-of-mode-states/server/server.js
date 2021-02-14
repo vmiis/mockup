@@ -3,12 +3,12 @@ const url = require('url');
 const fs = require('fs');
 const path = require('path');
 
-const baseDir = path.join(__dirname, './');
+const baseDir = path.join(__dirname, '../');
 const httpServer = http.createServer((request, response) => {
     if(request.method=='GET'){
         const parsedUrl = url.parse(request.url, true);
         let pathName = parsedUrl.pathname;
-        if(pathName.endsWith("/")) pathName=pathName+'/index.html';
+        if(pathName.endsWith("/")) pathName=pathName+'index.html';
         console.log(pathName)    
         const responseContentType = getContentType(pathName);
         response.setHeader('Content-Type', responseContentType);
@@ -74,7 +74,7 @@ const getContentType = pathName => {
     }
     return contentType;
 };
-var password_for_file_saving=process.env['password_for_file_saving'];;
+var password_for_file_saving=process.env['password_for_file_saving'];
 httpServer.listen(process.env.PORT, () => {
     console.log('\x1b[32m%s\x1b[0m', `Server is running at http://localhost:${httpServer.address().port}`);
 });

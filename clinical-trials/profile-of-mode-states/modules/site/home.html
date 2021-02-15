@@ -24,7 +24,10 @@
     </div>
 
     <div id=page2__ID style='background-color:#fff;padding:50px'>
-        <span>Sitting is the new smoking. Don't sit too long. Keep walking and relaxing in every hour. </span><br><br>
+        <span>Sitting is the new smoking. Don't sit too long. Keep walking and relaxing in every hour. </span>&nbsp;&nbsp;&nbsp;
+        <u style='cursor:pointer' title='click here to reset'><span id=time__ID>Time</span></u>&nbsp;&nbsp;&nbsp;
+        <u style='cursor:pointer' title='click here to reset' id=sound__ID>Alarm: <i class="fas fa-volume-mute" id=s_1__ID></i><i class="fas fa-volume-up" id=s_2__ID></i></u> <span id=s_3__ID> it's time to walk when the music is up.</span>
+        <br><br>
         <span style='margin-left:150px'>
             <u id="btn-play" style='cursor:pointer'>Play</u>&nbsp;&nbsp;
             <u id="btn-pause"style='cursor:pointer'>Pause</u>&nbsp;&nbsp;
@@ -52,6 +55,49 @@
 
     <script>
         function F__ID(){
+            //-----------------------------------
+            var sound=1;
+            var sd=function(){
+                if(sound==0)  sound=1;
+                else sound=0;
+                if(sound==0){
+                    $('#s_1__ID').show();
+                    $('#s_2__ID').hide();
+                    $('#s_3__ID').hide();
+                } 
+                else{
+                    $('#s_1__ID').hide();
+                    $('#s_2__ID').show();
+                    $('#s_3__ID').show();
+                }
+            }
+            sd();
+            var txt=localStorage.getItem($vm.hosting_path+"_g_time");
+            if(txt==undefined) localStorage.setItem($vm.hosting_path+"_g_time", new Date() );
+            setInterval(function(){
+                var txt1=localStorage.getItem($vm.hosting_path+"_g_time");
+                var dd=(3600-60-(new Date().getTime()-new Date(txt1).getTime())/1000);
+                if(dd<0){ 
+                   dd=0;
+                   if(sound==1){
+                       audioPlayer.stop();audioPlayer.play();
+                       $('#time__ID').triggerHandler('click');
+                   }
+                }
+                var m=(dd/60).toFixed(0); if(m.length==1) m='0'+m;
+                var s=(dd%60).toFixed(0);  if(s.length==1) s='0'+s;
+                $('#time__ID').text(+m+":"+s +" left to walk.");
+            },1000);
+            //-----------------------------------
+            $('#time__ID').on('click',function(e){
+                e.preventDefault();
+                localStorage.setItem($vm.hosting_path+"_g_time", new Date() );
+            })
+            //-----------------------------------
+            $('#sound__ID').on('click',function(e){
+                e.preventDefault();
+                sd();
+            })
             //-----------------------------------
             $('#get_in__ID').on('click',function(){
                 $vm.load_module('main-panel','',{})

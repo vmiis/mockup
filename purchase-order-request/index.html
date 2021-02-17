@@ -29,7 +29,7 @@
         <!----------------------------------------------->
         <script app code>
             //---------------------------------------------
-            $VmAPI={};$vm.ver=[0.10,0.01]; $vm['jquery-ui-min-js']=1;
+            $VmAPI={};$vm.ver=[0.11,0.01]; $vm['jquery-ui-min-js']=1;
             $vm.flexindex=new FlexSearch({  doc: {id: "id",field: ["title","contents"]}    });
             $vm.hosting_path=window.location.href.substring(0, window.location.href.split('?')[0].lastIndexOf('/'));
             //---------------------------------------------
@@ -48,9 +48,10 @@
         <script vm framework code>
             //=================================================
             //VM framework code, do not need to chang the following code in most cases
-            $vm.min_height=$(window).height()-60-25;
+            var hearder_height=83;
+            $vm.min_height=$(window).height()-hearder_height;
             $('#content').css('min-height',$vm.min_height);
-            $('#content').css('padding-top',60);
+            $('#content').css('padding-top',hearder_height);
             $vm.root_layout_content_slot='content'
             $vm.api_address='https://api.wappsystem.com';
             if(window.location.hostname=='127.0.0.1' || window.location.hostname=='localhost'){ 

@@ -134,7 +134,7 @@
 					else $vm.alert('Your data has been successfully submitted');    //standalone
 				}
 				if(data.Status=='Submit' || data.Status=='Draft'){
-					$vm.show_module('order-form-email-to-manager',{record:new_data});
+					$vm.show_module('email-requestor-to-manager',{record:new_data});
 				}
 				else done();
 				

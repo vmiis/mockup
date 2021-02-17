@@ -3,10 +3,13 @@
 	<div id=email__ID>
 		<div style=padding:30px>
 			<table style='border-collapse: collapse;'><tr><td width="880">
-				Dear <span id=manager__ID>Manager</span>,<br>
+				Dear <span id=requestor__ID>Requestor</span>,<br>
 				<br>
-				There is a new purchase order request.<br>
-				The purchase order request form is attached.</a><br>
+				The new purchase order request is not approved.<br>
+				The reason is<br>
+				<br>
+				<span id=reason__ID ></span>
+				<br>
 				<br>
 				Kind Regards,<br>
 				Administrator<br>
@@ -24,13 +27,13 @@
     	function F__ID(){
 			//---------------------------------------------
 			var m=$vm.module_list['__MODULE__'];
-        	//VmInclude:__CURRENT_PATH__pdf.js
+        	//VmInclude:__CURRENT_PATH__../order/pdf.js
 			var pdf="";
 			//---------------------------------------------
 			$('#D__ID').on('load',function(){ 
 				var record=m.input.record;
-				$('#manager__ID').text(record.Data.Manager_Name)
-				$('#address__ID').text(record.Data.Manager_Email)
+				$('#requestor__ID').text(record.Data.Requestor_Name)
+				$('#address__ID').text(record.Data.Requestor_Email)
 				$('#send__ID').hide();
 				m.pdf("order-form-pdf",record,function(pdf0){
 					pdf=pdf0;
@@ -46,6 +49,7 @@
 				open_model__ID();
 				var s=pdf.output('datauristring').split(';base64,').pop();
 				var ddd={
+					"email_address": $('#address__ID').html(),
 					"email_body": $('#email__ID').html(),
 					"attachment": s,
 				}

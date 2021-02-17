@@ -6,16 +6,12 @@
         //-------------------------------------
         //VmInclude:__COMPONENT__/g/grid.01.js
         //VmInclude:__CURRENT_PATH__pdf.js
-        
-        //Vm Include:__CURRENT_PATH__data.html.lab_manager_approval.js
-        //Vm Include:__CURRENT_PATH__data.html.supervisor_approval.js
-        //Vm Include:__CURRENT_PATH__data.html.financial_approval.js
-        //Vm Include:__CURRENT_PATH__data.html.received_confirm.js
-        //Vm Include:__CURRENT_PATH__print-formatted-string.js
-        //Vm Include:__CURRENT_PATH__print-form.js
+        //VmInclude:__CURRENT_PATH__data.html.manager_approval.js
+        //VmInclude:__CURRENT_PATH__data.html.finance_process.js
+        //VmInclude:__CURRENT_PATH__data.html.received.js
         //-------------------------------------
         var fields="Requestor_Name,Supplier_Name,Total_Amount,Status";
-        m.fields="_Form,_PDF,_Request_ID,"+fields+",Submit_date,Submitted_by,_Manager_Approval,_Financial_Process,_Received,_Delete";
+        m.fields="_Form,_PDF,_Request_ID,"+fields+",Submit_date,Submitted_by,_Manager_Approval,_Finance_Process,_Received,_Delete";
         //-------------------------------------
         m.cell_render=function(records,I,field,td){
             switch(field){
@@ -34,33 +30,22 @@
                     td.html("$"+parseFloat(records[I].Data[field]).toFixed(2));
                     td.css('text-align','right')
                     break;
-                case 'Quotation':
-                    if(records[I].Data[field] !=undefined) m.set_file_link_s0(records,I,field,td);
-                    break;
                 case "_Delete":
                     if(records[I].Data.Status=='Submit') td.html('');
                     break;
-                case '_Lab_Manager_Approval':
+                case '_Manager_Approval':
                     if(records[I].Data.Status=='Submit'){
                         td.html("<u style='cursor:pointer'>Approving</u>");
                         td.find('u').on('click',function(){
-                            $vm.show_module(m.lab_manager_approval_module,{UID:records[I].UID,A:records[I].A,goback:1,parent:records[I]})
+                            $vm.show_module(m.manager_approval_module,{UID:records[I].UID,A:records[I].A,goback:1,parent:records[I]})
                         });
                     }
                     break;
-                case '_Supervisor_Approval':
-                    if(records[I].Data.Status=='Submit' ){
-                        td.html("<u style='cursor:pointer'>Approving</u>");
+                case '_Finance_Process':
+                    if(records[I].Data.Status=='Submit'){
+                        td.html("<u style='cursor:pointer'>Processing</u>");
                         td.find('u').on('click',function(){
-                            $vm.show_module(m.supervisor_approval_module,{UID:records[I].UID,A:records[I].A,goback:1,parent:records[I]})
-                        });
-                    }
-                    break;
-                case '_Financial_Approval':
-                    if(records[I].Data.Status=='Submit' && parseFloat(records[I].Data.Total_Amount)>3000){
-                        td.html("<u style='cursor:pointer'>Approving</u>");
-                        td.find('u').on('click',function(){
-                            $vm.show_module(m.financial_approval_module,{UID:records[I].UID,A:records[I].A,goback:1,parent:records[I]})
+                            $vm.show_module(m.finance_process_module,{UID:records[I].UID,A:records[I].A,goback:1,parent:records[I]})
                         });
                     }
                     break;
@@ -92,7 +77,7 @@
             return true;
         }
         //-------------------------------------
-        m._data_process=function(){
+        m.data_process=function(){
             var options={};
             if(m.self==1) options={self:1};
             var uid_array=[];
@@ -100,10 +85,9 @@
                 uid_array.push(m.records[i].UID)
             }
             var query={ I2: { $in: uid_array } }
-            load_lab_manager_approval(query,options);
-            load_supervisor_approval(query,options);
-            load_financial_approval(query,options);
-            load_received_confirm(query,options);
+            load_manager_approval(query,options);
+            load_finance_process(query,options);
+            load_received(query,options);
         }
         //-------------------------------------
     }

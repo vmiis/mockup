@@ -1,0 +1,67 @@
+﻿<div id=D__ID>
+	<!--------------------------------------------------------------------------->
+	<div id=email__ID>
+		<div style=padding:30px>
+			<table style='border-collapse: collapse;'><tr><td width="880">
+				Notes:
+				<br>
+				<br>
+				<span id=notes__ID ></span>
+				<br>
+				<br>
+				
+			</td></tr></table>
+		</div>
+	</div>
+	<!--------------------------------------------------------------------------->
+	<div style=padding:30px>
+		<!--<button id=back__ID type="button" class="btn btn-secondary">Back</button>-->
+		<button id=send__ID type="button" class="btn btn-secondary">Send Email</button>
+		<br>To: <span id=address1__ID></span>
+		<br>To: <span id=address2__ID>finance@foo.com</span>
+	</div>
+	VmInclude:__COMPONENT__/m/model.01.html
+	<script>
+    	function F__ID(){
+			//---------------------------------------------
+			var m=$vm.module_list['__MODULE__'];
+        	//VmInclude:__CURRENT_PATH__../order/pdf.js
+			var pdf="";
+			//---------------------------------------------
+			$('#D__ID').on('load',function(){ 
+				var record=m.input.record;
+				$('#notes__ID').html($vm.text(record.Notes).replace(/\n/g,'<br>'));
+				$('#address1__ID').text(record.Data.Requestor_Email);
+				$('#send__ID').hide();
+				m.pdf("order-form-pdf",record,function(pdf0){
+					pdf=pdf0;
+					$('#send__ID').show();
+				})
+			});
+			//---------------------------------------------
+			$('#back__ID').on('click',function(){
+				window.history.go(-1);
+			})
+			//---------------------------------------------
+			$('#send__ID').on('click',function(){
+				open_model__ID();
+				var s=pdf.output('datauristring').split(';base64,').pop();
+				var ddd={
+					"email_address": $('#address1__ID').html()+","+$('#address2__ID').html(),
+					"email_body": $('#email__ID').html(),
+					"attachment": s,
+				}
+				var url="https://prod-11.australiasoutheast.logic.azure.com:443/workflows/cf0ce745360d4c6fba338905846477d0/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=pTQlTPRwkheQOAax8FZ96qp6z40j6Ec6LCUL599rFTE";
+				$vm.vmpost(url,ddd,function(code){
+					close_model__ID();
+					$('#send__ID').hide();
+					alert("The email has been sent out.")
+				});
+			})
+			//---------------------------------------------
+		}
+	</script>
+    <style>
+		/*VmInclude:__COMPONENT__/f/form.01.css*/
+    </style>
+</div>

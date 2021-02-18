@@ -68,6 +68,11 @@
             title:'form pdf',
             url:$H+"/order/form.html",
         },
+        "order-form-print":{
+            title:'print version',
+            url:$H+"/order/form.print.html",
+            router:1
+        },
         //-------------------------------
         "email-requestor-to-manager":{
             title:'email requestor to manager',

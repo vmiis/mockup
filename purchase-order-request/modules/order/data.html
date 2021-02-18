@@ -18,6 +18,12 @@
                 case '_Request_ID':
                     td.html(records[I].UID);
                     break;
+                case '_Print':
+                    td.html("<u style='cursor:pointer'>Print</u>");
+                    td.find('u').on('click',function(){
+                        $vm.show_module("order-form-print",{});
+                    });
+                    break;
                 case '_PDF':
                     td.html("<u style='cursor:pointer'>PDF</u>");
                     td.find('u').on('click',function(){

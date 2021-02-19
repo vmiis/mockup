@@ -158,21 +158,19 @@
                 $vm.show_user();
             })
             //------------------------------------
-            $vm.install_module('order-form-pdf','_g_vm_content',{},function(name,id){
+            //$vm.install_module('order-form-pdf','_g_vm_content',{},function(name,id){
+            $vm.install_module('order-form-print-and-pdf-hidden','_g_vm_content',{},function(name,id){
                 $('#D'+id).show();
             });
             //------------------------------------
         }
     </script>
     <style>
-        #D__ID{
-            /*background-color: lightslategray;*/
-        }
         #g_nav{
-                height:25px;
-                padding:1px 0 5px 10px;
-                background-color: #e5e9ec;
-                font-size:13px;
+            height:25px;
+            padding:1px 0 5px 10px;
+            background-color: #e5e9ec;
+            font-size:13px;
         }
         #top_right_corner__ID{
             display:block;

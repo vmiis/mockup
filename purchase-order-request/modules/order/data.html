@@ -5,13 +5,13 @@
     function F__ID(){
         //-------------------------------------
         //VmInclude:__COMPONENT__/g/grid.01.js
-        //VmInclude:__CURRENT_PATH__pdf.js
+        //Vm Include:__CURRENT_PATH__pdf.js
         //VmInclude:__CURRENT_PATH__data.html.manager_approval.js
         //VmInclude:__CURRENT_PATH__data.html.finance_process.js
         //VmInclude:__CURRENT_PATH__data.html.received.js
         //-------------------------------------
         var fields="Requestor_Name,Supplier_Name,Total_Amount,Status";
-        m.fields="_Form,_PDF,_Request_ID,"+fields+",Submit_date,Submitted_by,_Manager_Approval,_Finance_Process,_Received,_Delete";
+        m.fields="_Form,_Print,_Request_ID,"+fields+",Submit_date,Submitted_by,_Manager_Approval,_Finance_Process,_Received,_Delete";
         //-------------------------------------
         m.cell_render=function(records,I,field,td){
             switch(field){
@@ -21,15 +21,16 @@
                 case '_Print':
                     td.html("<u style='cursor:pointer'>Print</u>");
                     td.find('u').on('click',function(){
-                        $vm.show_module("order-form-print",{});
+                        $vm.show_module("order-form-print-and-pdf",{record:records[I]});
                     });
                     break;
                 case '_PDF':
                     td.html("<u style='cursor:pointer'>PDF</u>");
                     td.find('u').on('click',function(){
-                        m.pdf("order-form-pdf",records[I],function(pdf){
+                        var _m=$vm.module_list['order-form-print-and-pdf-hidden'];
+                        _m.pdf(records[I],function(pdf){
                             window.open(pdf.output('bloburl'));
-                        });
+                        })
                     });
                     break;
                 case 'Total_Amount':

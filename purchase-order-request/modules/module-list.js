@@ -64,35 +64,42 @@
             self:1,
         },
         //-------------------------------
-        "order-form-pdf":{
-            title:'form pdf',
-            url:$H+"/order/form.html",
+        "order-form-print-and-pdf-hidden":{
+            title:'for pdf',
+            url:$H+"/order/form.print_and_pdf.html",
+            router:1
         },
-        "order-form-print":{
+        //-------------------------------
+        "order-form-print-and-pdf":{
             title:'print version',
-            url:$H+"/order/form.print.html",
+            url:$H+"/order/form.print_and_pdf.html",
             router:1
         },
         //-------------------------------
         "email-requestor-to-manager":{
             title:'email requestor to manager',
             url:$H+"/emails/requestor-to-manager.html",
+            pdf_hidden:"order-form-print-and-pdf-hidden",
         },
         "email-manager-to-requestor":{
             title:'email manager to requestor',
             url:$H+"/emails/manager-to-requestor.html",
+            pdf_hidden:"order-form-print-and-pdf-hidden",
         },
         "email-manager-to-finance":{
             title:'email manager to finance',
             url:$H+"/emails/manager-to-finance.html",
+            pdf_hidden:"order-form-print-and-pdf-hidden",
         },
         "email-finance-to-requestor":{
             title:'email finance to requestor',
             url:$H+"/emails/finance-to-requestor.html",
+            pdf_hidden:"order-form-print-and-pdf-hidden",
         },
         "email-received":{
             title:'notes for received',
             url:$H+"/emails/received.html",
+            pdf_hidden:"order-form-print-and-pdf-hidden",
         },
         //-------------------------------
         "manager-approval":{

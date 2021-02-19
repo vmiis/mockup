@@ -95,7 +95,6 @@
     	function F__ID(){
     		//-------------------------------------
 			//VmInclude:__COMPONENT__/f/form.01.js
-        	//VmInclude:__CURRENT_PATH__pdf.js
             //VmInclude:__COMPONENT__/f/form-item-a.01.js
             //VmInclude:__CURRENT_PATH__form.html.item_a_list.js
 			new ResizeObserver($vm.responsive).observe(form_container__ID);
@@ -140,6 +139,7 @@
 				
 			}
 			//-------------------------------------
+			/*
 			m.load_data=function(record){
 				$('#F__ID')[0].reset();
 				$vm.deserialize(record,'#F__ID');
@@ -147,7 +147,8 @@
 				m.item_a_records=record.Data.items;
     			m.item_a_render();
 				$('#F__ID .c_print').hide();
-			}      
+			}
+			*/      
 			//-------------------------------------
 		}
 	</script>

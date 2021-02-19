@@ -25,7 +25,6 @@
     	function F__ID(){
 			//---------------------------------------------
 			var m=$vm.module_list['__MODULE__'];
-        	//VmInclude:__CURRENT_PATH__../order/pdf.js
 			var pdf="";
 			//---------------------------------------------
 			$('#D__ID').on('load',function(){ 
@@ -33,7 +32,8 @@
 				$('#notes__ID').html($vm.text(record.Notes).replace(/\n/g,'<br>'));
 				$('#address1__ID').text(record.Data.Requestor_Email);
 				$('#send__ID').hide();
-				m.pdf("order-form-pdf",record,function(pdf0){
+				var _m=$vm.module_list[m.pdf_hidden];
+                _m.pdf(record,function(pdf0){
 					pdf=pdf0;
 					$('#send__ID').show();
 				})

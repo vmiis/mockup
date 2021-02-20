@@ -45,7 +45,7 @@
             })
             //--------------------------------------------------------
             $('#select__ID').on('change',function(){
-                window.location=$vm.hosting_path+"/?/"+prefix+"panel&tables="+$(this).val();
+                window.location=$vm.hosting_path+"/?/"+prefix+"main-panel&tables="+$(this).val();
             })
             //--------------------------------------------------------
             if(window.location.toString().indexOf('tables=wapp')!=-1) $('#select__ID').val('wapp')

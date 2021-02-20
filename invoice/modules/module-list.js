@@ -26,15 +26,16 @@
         invoice_print_module="invoice-print-vm";
     }
     var modules={
-        "panel":                          {url:$H+"/panels/panel.html",router:1},
+        "main-panel":                     {url:$H+"/panels/panel.html",router:1},
         "diagram":                        {url:$H+"/diagram/diagram.html"},
         "client-data":                    {url:$H+"/client/data.html",      Table:invoice_client_table, form_module:'client-form',  router:1},
         "client-form":                    {url:$H+"/client/form.html",      Table:invoice_client_table, router:1},
         "invoice-data":                   {url:$H+"/invoice/data.html",     Table:invoice_record_table, form_module:'invoice-form', print_module:invoice_print_module,router:1},
         "invoice-form":                   {url:$H+"/invoice/form.html",     Table:invoice_record_table,   client_table:invoice_client_table,  router:1},
-        "invoice-print-demo":             {url:$H+"/print/demo.html",       Table:invoice_record_table,   client_table:invoice_client_table,  router:1},
-        "invoice-print-wapp":             {url:$H+"/print/wapp.html",       Table:invoice_record_table,   client_table:invoice_client_table,  router:1},
-        "invoice-print-vm":               {url:$H+"/print/vm.html",         Table:invoice_record_table,   client_table:invoice_client_table,  router:1},
+        
+        "invoice-print-demo":             {url:$H+"/invoice/form.print_and_pdf.demo.html"},
+        "invoice-print-wapp":             {url:$H+"/invoice/form.print_and_pdf.wapp.html"},
+        "invoice-print-vm":               {url:$H+"/invoice/form.print_and_pdf.vm.html"},
     }
     set_prefix(prefix,modules);
     //-------------------------------------------------------------------------------------

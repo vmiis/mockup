@@ -2,19 +2,19 @@
     <div id=layout__ID>
         <div id=left__ID style='margin:auto 10px'>
             <a id=desk_logo__ID href="home" style='color:#fff;text-decoration: none;font-size:38px;font-weight: bold;text-shadow: 2px 2px 2px #000'>
-                MOCKUP
+                LOGO
             </a>
         </div>
-        <div id=middle__ID style='margin:auto 0; padding-left:15px'>
+        <div id=middle__ID style='margin:auto 0; padding-left:15px;padding-top:15px'>
             <a id=mobile_logo__ID href="home" style='font-weight: bold;font-size:28px;color:#fff;text-decoration: none;'>
-            MOCKUP</a>
+            LOGO</a>
             <input id="hamburger__ID" type="checkbox" style='display:none'>
             <div id=menu__ID>
                 <ul>
                     <li><a href="?/home"><i class="fa fa-home"></i> Home</a></li>
-                    <li><a href="?/panel"><i class="fas fa-table"></i> Invoice</a></li>
+                    <li><a href="?/main-panel"><i class="fas fa-table"></i> Business Portal</a></li>
                     <li><a href="?/diagram"><i class="fas fa-project-diagram"></i> Diagram</a></li>
-                    <li><a href="https://www.vmiis.com"><i class="fa fa-info"></i> About</a></li>
+                    <li><a w=1 href="https://www.vmiis.com"><i class="fa fa-info"></i> About</a></li>
                     <li><a href="" id=signin__ID onclick=$vm.signin() ><i class="fa fa-user"></i> Sigin</a></li>
                     <li><a href="" id=signout__ID onclick=$vm.signout() ><i class="fa fa-user"></i> Sigout</a></li>
                 </ul>
@@ -32,23 +32,105 @@
             </div>
         </div>
     </div>    
-    <div style='padding:1px 0 6px 10px;background-color: #e5e9ec;font-size:13px;' id=nav__ID></div>
+    <div id=g_nav></div>
     <script>
         function F__ID(){
             //------------------------------------
+            $('#signout__ID').hide();
+            //------------------------------------
             $vm.header_ready=1;
             if($vm.resize_content!=undefined) $vm.resize_content();
-            //------------------------------------
+            //--------------------------------------
             $('#D__ID a').on('click',function(e){
                 e.preventDefault();
-                $('#hamburger__ID').prop("checked", false);
+                e.stopPropagation();
                 var module_name=$(this).attr('href').replace('?\/','');
-                if(module_name=='https://www.vmiis.com'){
+                var w=$(this).attr('w');
+                if(w==1){
                     window.open(module_name);
                     return;
                 }
+                if(module_name=='dropdown'){
+                    var w=$(this).closest('li').width();
+                    var mh=$(this).closest('li').find('ul').first().css('max-height');
+                    if(mh=='0px'){
+                        close_all_dropdown();
+                        $(this).closest('li').find('ul').first().css('max-height','600px');
+                    }
+                    else $(this).closest('li').find('ul').first().css('max-height','0px');
+                    $(this).closest('li').find('ul').first().css('min-width',w+'px');
+                    return;
+                }
                 if(module_name!="") $vm.show_module(module_name,{})
+                close_all_dropdown();
+                $('#hamburger__ID').prop("checked", false);
             })
+            //---------------------------------------------------------------
+            $('#hamburger__ID').on('change',function(e){
+                if($(this).prop("checked")==false) close_all_dropdown();
+            })
+            //---------------------------------------------------------------
+            $('body').on('click',function(){
+                close_all_dropdown();
+            })
+            $('#menu__ID>ul>li>a').on('mouseover',function(e){
+                //close_all_dropdown();
+            })
+            //---------------------------------------------------------------
+            $('#menu__ID>ul>li>ul').on('mouseleave',function(e){
+                close_all_dropdown();
+            })
+            //---------------------------------------------------------------
+            var close_all_dropdown=function(){
+                $('#D__ID ul').each(function(){
+                    if($(this).css('max-height')=='600px') $(this).css('max-height','0px');
+                })
+            }
+            //---------------------------------------------------------------
+            $('#search_box__ID').focus(function(){$('#search_box__ID').autocomplete("search","");});
+            $('#search_box__ID').autocomplete({
+                minLength:0,
+                source:function(request,response){
+                    var result=$vm.flexindex.search(request.term);
+                    var r=[]; 
+                    for(var i=0; i<result.length && i<35; i++){
+                        var t=result[i].title; if(t=="") t=result[i].id;
+                        t=t.replace(/-/g,' ').replace(/_/g,' ')
+                        r.push({label:t,value:result[i].id})
+                    }
+                    response(r);
+                },
+                select: function(event,ui){
+                    if(ui.item.value!='') $vm.show_module(ui.item.value,{})
+                    ui.item.value='';
+                }
+            })
+            //--------------------------------------
+            $vm.sys_nav_path=function(){
+                var L=$vm.page_stack.length;
+                var I=L-5;
+                if(I<0) I=0;
+                var txt="";
+                for(var i=I;i<L;i++){
+                    if(txt!="") txt+=" -> ";
+                    var nm=$vm.page_stack[i].m_name;
+                    var title=$vm.module_list[nm].title;
+                    if(title==undefined) title=nm.replace(/_/g,' ').replace(/-/g,' ');
+                    if(i==L-1 || L==1) txt+=title;
+                    else txt+="<u nm="+nm+" style='cursor:pointer'>"+title+"</u>";
+                }
+                $('#g_nav').html(txt);
+                $('#g_nav u').on('click',function(){
+                    var nm=$(this).attr("nm");
+                    var K=$vm.page_stack.length-1;
+                    var N=0;
+                    for(var j=K;j>=0;j--){
+                        if(nm==$vm.page_stack[j].m_name) break;
+                        N++;
+                    }
+                    for(var j=0;j<N;j++) window.history.go(-1);
+                })
+            }
             //------------------------------------
             $vm.show_user=function(){
                 if($vm.user_name==undefined || $vm.user_name=='guest'){
@@ -76,37 +158,19 @@
                 $vm.show_user();
             })
             //------------------------------------
-            $vm.sys_nav_path=function(){
-                var L=$vm.page_stack.length;
-                var I=L-5;
-                if(I<0) I=0;
-                var txt="";
-                for(var i=I;i<L;i++){
-                    if(txt!="") txt+=" -> ";
-                    var nm=$vm.page_stack[i].m_name;
-                    var title=$vm.module_list[nm].title;
-                    if(title==undefined) title=nm.replace(/_/g,' ').replace(/-/g,' ');
-                    if(i==L-1 || L==1) txt+=title;
-                    else txt+="<u nm="+nm+" style='cursor:pointer'>"+title+"</u>";
-                }
-                $('#nav__ID').html(txt);
-                $('#nav__ID u').on('click',function(){
-                    var nm=$(this).attr("nm");
-                    var K=$vm.page_stack.length-1;
-                    var N=0;
-                    for(var j=K;j>=0;j--){
-                        if(nm==$vm.page_stack[j].m_name) break;
-                        N++;
-                    }
-                    for(var j=0;j<N;j++) window.history.go(-1);
-                })
-            }
+            //$vm.install_module('order-form-pdf','_g_vm_content',{},function(name,id){
+            //$vm.install_module('invoice-form-print-and-pdf-hidden','_g_vm_content',{},function(name,id){
+            //    $('#D'+id).show();
+            //});
             //------------------------------------
         }
     </script>
     <style>
-        #D__ID{
-            background-color: lightslategray;
+        #g_nav{
+            height:25px;
+            padding:1px 0 5px 10px;
+            background-color: #e5e9ec;
+            font-size:13px;
         }
         #top_right_corner__ID{
             display:block;
@@ -150,7 +214,7 @@
                 display:none;
             }
             #hamburger__ID:checked ~ #menu__ID{
-                max-height:200px;
+                max-height:300px;
             }
             #right__ID label{
                 margin:0;

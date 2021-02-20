@@ -1,0 +1,153 @@
+﻿<div id=D__ID>
+	<div id=page_container__ID style='width:1000px'>
+		<table style='border-collapse: collapse;width:100%'>
+			<tr>
+				<td>
+					<b style='font-size:200%'>Tax Invoice</b><br>
+					<b style='color:red'>No. <span id=num__ID></span></b>
+                    <br>Issue Date: <span id=Issue_Date__ID></span>
+                    <br>Due Date: <span id=Due_Date__ID></span>
+				</td>
+				<td>
+					<img src=__HOST__/images/logo.jpg style='width:300px' />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<hr>
+				</td>
+			</tr>
+			<tr>
+				<td style='width:50%'>
+					<b>To:</b><br>
+					<span id=Client_info__ID></span>
+				</td>
+				<td style='width:50%'>
+					<b>From: </b><br>
+					ABC Pty Ltd<br>
+					100 City Road<br>
+					Telephone: 02 90001234<br>
+					Email: finance@company.com
+					<br>
+					<br>
+				</td>
+			</tr>
+		</table>
+		<br>
+		<br>
+		<hr>
+		<table id=items__ID style='border-collapse: collapse;width:100%'>
+		</table>
+		<table style='border-collapse: collapse;width:100%'>
+			<tr><td  style='text-align:right' >GST:&nbsp;&nbsp;<span id=GST__ID></span></td></tr>
+			<tr><td  style='text-align:right;font-weight: bold;' >Total:&nbsp;&nbsp;<span id=Total__ID></span></td></tr>
+		</table>
+
+		<button class=c_print id=print__ID>Print</button>
+		<button class=c_print id=pdf__ID>PDF</button>
+	</div>
+    <script>
+    	function F__ID(){
+			//-----------------------------------------------------
+			var m=$vm.module_list['__MODULE__'];
+			//-----------------------------------------------------
+			m.set_data=function(record){
+				
+				var data=record.Data;
+				var items=record.Data.items;
+				var uid=record.UID;
+
+				$('#num__ID').text(uid);
+				var Client_info=$vm.text(data.Client_info).replace(/\|/g,'<br>');
+				$('#Client_info__ID').html(Client_info);
+                $('#Issue_Date__ID').text(data.Issue_Date);
+                $('#Due_Date__ID').text(data.Due_Date);
+
+                var txt=txt+`<tr>
+					<td><b>Description</b></td>
+					<td style='text-align: right;'><b>Unit Price</b></td>
+					<td style='text-align: right;'><b>Quantity</b></td>
+					<td style='text-align: right;'><b>GST</b></td>
+					<td style='text-align: right;'><b>Amount</b></td>
+					</tr>
+				`;
+                for(var i=0;i<items.length;i++){
+                    var GST="";
+                    if(items[i].GST=="1") GST="*";
+                    txt+="<tr><td>"+items[i].Description+"</td>";
+                    txt+="<td style='text-align: right;'>"+items[i].Unit_Price+"</td>";
+                    txt+="<td style='text-align: right;'>"+items[i].Quantity+"</td>";
+                    txt+="<td style='text-align: right;'>"+GST+"</td>";
+                    txt+="<td style='text-align: right;'>"+items[i].Amount+"</td></tr>";
+                }
+                $('#items__ID').html(txt);
+                
+				$('#GST__ID').text("$"+data.GST_Amount);
+                $('#Total__ID').text("$"+data.Total_Amount);
+			}
+			//-----------------------------------------------------
+            $('#D__ID').on('load',function(){
+				m.set_data(m.input.record)
+			})
+			//-----------------------------------------
+			m.pdf=function(record,callback){
+				if(record!=null) m.set_data(record);
+				var CH=document.getElementById('page_container__ID').clientHeight;
+				var CW=document.getElementById('page_container__ID').clientWidth;
+				$('#D__ID .c_print').hide();
+				html2canvas(document.querySelector('#page_container__ID')).then(function(canvas){
+					var pdf = new jsPDF('p', 'mm', 'a4');
+					var mH=10,mW=8;
+					var W=210;
+					var H=297;
+					var pW=CW;
+					var pH=pW*(H-2*mH)/(W-2*mW);
+					var pages=CH/pH;
+					for(var i=0;i<pages;i++){
+						var ccc=document.createElement("canvas");
+						ccc.setAttribute('width', pW);
+						ccc.setAttribute('height', pH);
+						var ctx = ccc.getContext('2d');
+						ctx.fillStyle="#FFFFFF";
+						ctx.fillRect(0,0,pW,pH);						
+						ctx.drawImage(canvas,0,i*pH,pW,pH,0,0,pW,pH);
+						var canvasDataURL = ccc.toDataURL("image/png", 1.0);
+						if(i>0) pdf.addPage();
+						pdf.addImage(canvasDataURL, 'JPEG', mW, mH, W-2*mW, H-2*mH);
+					}
+					$('#D__ID .c_print').show();
+					callback(pdf);
+				})   
+			}
+			//-----------------------------------------
+			$('#print__ID').on('click',function(){window.print();})
+			//-----------------------------------------------------
+			$('#pdf__ID').on('click',function(){
+				m.pdf(null,function(pdf){
+					window.open(pdf.output('bloburl'));
+				});
+			})
+			//-----------------------------------------------------
+		}
+	</script>
+    <style>
+		#page_container__ID{
+			padding:20px;
+			width:1000px;
+			background-color:#fff;
+			margin-top:20px;
+			margin-left: auto;
+			margin-right: auto;
+			font-family: Verdana,sans-serif;
+			font-size: 15px;
+			line-height: 1.5;
+		}
+		#D__ID td{
+			vertical-align: top;
+		}
+		#items__ID td{
+			padding:3px;
+			border:1px black solid;
+		}
+    </style>
+</div>

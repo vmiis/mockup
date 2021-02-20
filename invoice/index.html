@@ -11,21 +11,25 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/FlexSearch/0.6.22/flexsearch.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.6/xlsx.full.min.js"></script>
         <script src="https://json-viewer.vmiis.com/json-viewer/jquery.json-viewer.js"></script>
-        <script src="https://alcdn.msauth.net/browser/2.8.0/js/msal-browser.min.js"></script>        
+        <script src="https://cdn.jsdelivr.net/npm/opensheetmusicdisplay@0.8.5/build/opensheetmusicdisplay.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/osmd-audio-player/umd/OsmdAudioPlayer.min.js"></script>
+        <script src="https://alcdn.msauth.net/browser/2.8.0/js/msal-browser.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>   
+        <script src="https://unpkg.com/html2canvas@1.0.0-rc.5/dist/html2canvas.js"></script>   
         <script>$vm={};</script>
     </head>
     <body>
-        <div id=layout1>
+        <div id=_g_vm_canvas style='position:absolute;top:-100000px'></div>
+        <div id=_g_vm_content style='position:absolute;top:-100000px;'></div>
+        <div id=layout>
             <div id=header></div>
-            <div id=layout2>
-                <div id=content></div>
-                <div id=footer></div>
-            </div>
+            <div id=content></div>
+            <div id=footer></div>
         </div>
         <!----------------------------------------------->
         <script app code>
             //---------------------------------------------
-            $VmAPI={};$vm.ver=[0.07,0.01]; $vm['jquery-ui-min-js']=1;
+            $VmAPI={};$vm.ver=[0.15,0.02]; $vm['jquery-ui-min-js']=1;
             $vm.flexindex=new FlexSearch({  doc: {id: "id",field: ["title","contents"]}    });
             $vm.hosting_path=window.location.href.substring(0, window.location.href.split('?')[0].lastIndexOf('/'));
             //---------------------------------------------
@@ -44,9 +48,12 @@
         <script vm framework code>
             //=================================================
             //VM framework code, do not need to chang the following code in most cases
+            var hearder_height=83;
+            $vm.min_height=$(window).height()-hearder_height;
+            $('#content').css('min-height',$vm.min_height);
+            $('#content').css('padding-top',hearder_height);
             $vm.root_layout_content_slot='content'
             $vm.api_address='https://api.wappsystem.com';
-            //$vm.api_address='https://woolcock-azure-mdb.vmiis.com/lab';
             if(window.location.hostname=='127.0.0.1' || window.location.hostname=='localhost'){ 
                 $vm.localhost=true;
             }
@@ -58,11 +65,16 @@
                 var title=$vm.module_list[m_name].url.split('/').pop(); document.title=title+" - "+t ;
                 var info=$vm.module_list[m_name].description;  if(info==undefined) info="Modular distributed microservices web application."; $("meta[name='description']").attr("content", info);
                 if(m_name!="sys_editor") $vm.active_name=m_name;
-                document.getElementById('layout2').scrollTop=$vm.module_list[$vm.active_name].scrollTop;
+                document.getElementById('layout').scrollTop=$vm.module_list[$vm.active_name].scrollTop;
                 if($vm.sys_nav_path!=undefined) $vm.sys_nav_path();
+                
+                if(m_name!=undefined){ $vm.active_id=$vm.module_list[m_name].id; $vm.active_name=m_name; }
+                if($vm.active_id!='') $('#D'+$vm.active_id).css('min-height',$vm.min_height+"px");
+                if(m_name=='home') {$("#header").css("background","rgba(0,0,0,0)"); $('#midi_buttons').show(); $('#g_nav').hide();}
+                else               {$("#header").css("background","rgba(0,0,0,0.8)");  $('#midi_buttons').hide(); $('#g_nav').show();}
             }
             //---------------------------------------------
-            document.getElementById('layout2').onscroll = function(){
+            document.getElementById('layout').onscroll = function(){
                 $vm.module_list[$vm.active_name].scrollTop=this.scrollTop;
             }
             //---------------------------------------------
@@ -171,6 +183,17 @@
             $("body").addClass('body_background_default');
             $vm.boot(); //start from here
             //=================================================
+            $(window).on('scroll', function() {
+            if($vm.active_name=='home'){
+                var y=-$(window).scrollTop()/3;
+                $('body').css({ 'background-position-y': y+'px'});
+                var r=-y/100; if(r>0.5) r=0.5;
+                $("#header").css("background","rgba(0,0,0,"+r+")");
+            }
+            //=================================================
+        });
+        //-------------------------------------
+        if('scrollRestoration' in history) {history.scrollRestoration = 'manual';}
         </script>
         <!----------------------------------------------->
         <style main style>
@@ -179,16 +202,14 @@
                 padding:0;
                 height:100%;
             }
-            #layout1 {
-                height: 100%;
-                display: grid;
-                grid-template-rows: auto 1fr;
-            }
-            #layout2 {
-                height: 100%;
-                display: grid;
-                grid-template-rows: 1fr auto;
-                overflow:auto;
+            #header{
+                height:60px;
+                position:fixed;
+                top:0;
+                left:0;
+                width:100%;
+                background:rgba(0,0,0,0.6);
+                z-index:10;
             }
             @keyframes vm_module_fadein {
                 from { opacity:0; }

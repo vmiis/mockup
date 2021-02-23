@@ -29,10 +29,10 @@
         <u style='cursor:pointer' title='click here to reset' id=sound__ID>Alarm: <i class="fas fa-volume-mute" id=s_1__ID></i><i class="fas fa-volume-up" id=s_2__ID></i></u> <span id=s_3__ID> it's time to walk when the music is up.</span>
         <br><br>
         <span style='margin-left:150px'>
-            <button id="btn-play" class="btn btn-secondary">Play</button>
-            <button id="btn-pause" class="btn btn-secondary">Pause</button>
-            <button id="btn-continue" class="btn btn-secondary">Continue</button>
-            <button id="btn-stop" class="btn btn-secondary">Stop</button>
+            <button id="btn-play__ID" class="btn btn-secondary">Play</button>
+            <button id="btn-pause__ID" class="btn btn-secondary">Pause</button>
+            <button id="btn-continue__ID" class="btn btn-secondary">Continue</button>
+            <button id="btn-stop__ID" class="btn btn-secondary">Stop</button>
         </span>
         <div id="score__ID"></div>
     </div>
@@ -123,28 +123,44 @@
                 sd();
             })
             //-----------------------------------
+            //************************************************************
             var url="__CURRENT_PATH__score.musicxml";
-            const osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay(document.getElementById("score__ID"));
-            osmd.setOptions({followCursor:true});
-            const audioPlayer = new OsmdAudioPlayer();
-            async function music(scoreXml){
-                await osmd.load(scoreXml);
-                await osmd.render();
-                await audioPlayer.loadScore(osmd);
-                document.getElementById("btn-play").addEventListener("click", () => {
-                    audioPlayer.stop();audioPlayer.play();
-                });
-                document.getElementById("btn-pause").addEventListener("click", () => {
-                    audioPlayer.pause();
-                });
-                document.getElementById("btn-continue").addEventListener("click", () => {
-                    audioPlayer.play();
-                });
-                document.getElementById("btn-stop").addEventListener("click", () => {
-                    audioPlayer.stop();
-                });
-
-
+            const osmd          = new opensheetmusicdisplay.OpenSheetMusicDisplay(document.getElementById("score__ID"),{autoResize:false});
+            const audioPlayer   = new OsmdAudioPlayer();
+            //osmd.setOptions({followCursor:true});
+            $.get(url,function(scoreXml){
+                osmd.load(scoreXml)
+                .then(
+                    function(){
+                        osmd.render();
+                        audioPlayer.loadScore(osmd)
+                        .then(
+                            function(){
+                                audioPlayer.on("iteration", notes => {
+                                    //console.log(audioPlayer.state);
+                                    //osmd.cursor.next();
+                                    //console.log(notes);
+                                });
+                            }
+                        )
+                    }
+                )
+            },'text');
+            //----------------------------------------------
+            $("#btn-play__ID").on('click',function(){
+                audioPlayer.stop();audioPlayer.play();
+            });
+            $("#btn-pause__ID").on('click',function(){
+                audioPlayer.pause();
+            });
+            $("#btn-continue__ID").on('click',function(){
+                audioPlayer.play();
+            });
+            $("#btn-stop__ID").on('click',function(){
+                audioPlayer.stop();
+            });
+            //************************************************************
+                /*
                 //const myBlob = new Blob();
                 var link=document.createElement('a');
                 //var url = window.URL || window.webkitURL;
@@ -153,13 +169,8 @@
                 link.download="aaa.doc";
                 link.innerText = "This is a aaa";
                 document.body.appendChild(link)
-                //link.click();
-
-
-            };
-            $.get(url,function(scoreXml){
-                music(scoreXml);
-            },'text');
+                link.click();
+                */
             //**************************************************
             //Page 3 functions
             var a=window.location.href.replace('?/','').split('/'); a.pop();

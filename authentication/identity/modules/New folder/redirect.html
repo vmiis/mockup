@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<link rel="icon" href="data:,">
+		<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.0.min.js" type="text/javascript"></script>
+		<script>$vm={}; $VmAPI={};</script>
+		<script src="https://vm.vmiis.com/distribution/vm.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<meta name='viewport' content='width=device-width, initial-scale=1'>
+	</head>
+	<body>
+		<script>
+				var urlParams = new URLSearchParams(window.location.search);
+				var code=urlParams.get('code');
+				localStorage.setItem('blackbuad_code',code);
+                window.opener.postMessage({code:code}, '*');
+                window.close();
+		</script>
+	</body>
+</html>

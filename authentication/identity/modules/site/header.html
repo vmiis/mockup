@@ -15,7 +15,7 @@
                     <li><a href="?/main-panel"><i class="fas fa-table"></i> Business Portal</a></li>
                     <li><a href="?/diagram"><i class="fas fa-project-diagram"></i> Diagram</a></li>
                     <li><a w=1 href="https://www.vmiis.com"><i class="fa fa-info"></i> About</a></li>
-                    <li><a href="" id=signin__ID onclick=$vm.signin() ><i class="fa fa-user"></i> Sign In</a></li>
+                    <li><a href="?/signin" id=signin__ID ><i class="fa fa-user"></i> Sign In</a></li>
                     <li><a href="" id=signout__ID onclick=$vm.signout() ><i class="fa fa-user"></i> Sign out</a></li>
                 </ul>
             </div>
@@ -133,18 +133,21 @@
             }
             //------------------------------------
             $vm.show_user=function(){
-                if($vm.user_name==undefined || $vm.user_name=='guest'){
+                var n=$vm.displayname;
+                if(n==undefined || n=="") n=$vm.user_name;
+                if(n==undefined || n=='guest' || n==''){
                     $('#username__ID').text('');
                     $('#signin__ID').show();
                     $('#signout__ID').hide();
                 }
                 else{
-                    $('#username__ID').text('Signed in as '+ $vm.user_name);
+                    $('#username__ID').text('Signed in as '+ n);
                     $('#signin__ID').hide();
                     $('#signout__ID').show();
                 }
             }
             //------------------------------------
+            /*
             window.onmessage=function(e){
                 if(e.data.username!=undefined && e.data.token!=undefined){
                     $vm.user_name=e.data.username;
@@ -152,16 +155,12 @@
                     location.reload(true);
                 }
             };
+            */
             //------------------------------------
             $vm.init(function(){
                 $vm.init_status=1;
                 $vm.show_user();
             })
-            //------------------------------------
-            //$vm.install_module('order-form-pdf','_g_vm_content',{},function(name,id){
-            $vm.install_module('order-form-print-and-pdf-hidden','_g_vm_content',{},function(name,id){
-                $('#D'+id).show();
-            });
             //------------------------------------
         }
     </script>

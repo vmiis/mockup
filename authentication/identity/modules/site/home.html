@@ -1,0 +1,200 @@
+<div id=D__ID>
+    <script type="text/javascript" src="https://gitzip.vmiis.com/js/FileSaver.min.js"></script>
+    <script type="text/javascript" src="https://gitzip.vmiis.com/js/jszip.min.js"></script>
+    <script type="text/javascript" src="https://gitzip.vmiis.com/js/API.js"></script>
+	<div id=page1__ID style='display:flex;align-items: center'>
+		<div class="container-fluid" style='max-width:960px'>
+			<div class="text-center panel__ID" style='color:#fff'>
+				<h1 style='font-size: 50px;font-family: "Brush Script MT", cursive;text-shadow: 2px 2px 2px #000'>Welcome to this micro application</h1>
+                <p>
+                    <br><br>
+                    <a id=get_in__ID class='btn btn-success' style='color:#fff' >Enter</a>
+                </p>
+			</div>
+			<br><br>
+			<br><br>
+			<br><br>
+		</div>
+        <div style='text-align: center;position:absolute;bottom:10px;width:100%;'>
+            <div id=scroll_down__ID>
+                <i class="fas fa-angle-double-down"></i>
+                <br>Scroll
+            </div>
+        </div>
+    </div>
+
+    <div id=page2__ID style='background-color:#fff;padding:50px'>
+        <span>Sitting is the new smoking. Don't sit too long. Keep walking and relaxing in every hour. </span>&nbsp;&nbsp;&nbsp;
+        <u style='cursor:pointer' title='click here to reset'><span id=time__ID>Time</span></u>&nbsp;&nbsp;&nbsp;
+        <u style='cursor:pointer' title='click here to reset' id=sound__ID>Alarm: <i class="fas fa-volume-mute" id=s_1__ID></i><i class="fas fa-volume-up" id=s_2__ID></i></u> <span id=s_3__ID> it's time to walk when the music is up.</span>
+        <br><br>
+        <span style='margin-left:150px'>
+            <u id="btn-play" style='cursor:pointer'>Play</u>&nbsp;&nbsp;
+            <u id="btn-pause"style='cursor:pointer'>Pause</u>&nbsp;&nbsp;
+            <u id="btn-stop" style='cursor:pointer'>Stop</u>&nbsp;&nbsp;
+        </span>
+        <div id="score"></div>
+        <img src=__CURRENT_PATH__walking.gif style='margin-top:-500px' />
+    </div>
+
+    <div id=page3__ID style='background-color:#f8f8f8;padding:50px'>
+        <h5 id=title__ID></h5>
+        <div style='max-width:600px'>
+            <ul>
+                Highly scalable, flexible, reusable, replaceable, maintainable, testable, loosely coupled, independently deployable, organized around business capabilities, owned and maintained by a small team.
+            </ul>
+        </div>
+        <br>
+        <a id=d__ID style='cursor:pointer;color:#000'><u>Download and run this micro web application on a local computer</u></a><br>
+        <ul>
+            <li>Install NodeJS if haven't (https://nodejs.org/)</li>
+            <li>Run start-server.bat, you will see the a web service address, for example http://localhost:57193</li>
+            <li>Use a web browser to see this micro web application</li>
+        </ul>
+    </div>
+
+    <script>
+        function F__ID(){
+            //-----------------------------------
+            var sound=1;
+            var alarm=localStorage.getItem($vm.hosting_path+"_g_alarm");
+            if(alarm==null || alarm=="0") sound=1;
+            else sound=0;
+            var sd=function(){
+                if(sound==0)  sound=1;
+                else sound=0;
+                localStorage.setItem($vm.hosting_path+"_g_alarm", sound );
+                if(sound==0){
+                    $('#s_1__ID').show();
+                    $('#s_2__ID').hide();
+                    $('#s_3__ID').hide();
+                } 
+                else{
+                    $('#s_1__ID').hide();
+                    $('#s_2__ID').show();
+                    $('#s_3__ID').show();
+                }
+            }
+            sd();
+            var txt=localStorage.getItem($vm.hosting_path+"_g_time");
+            if(txt==undefined) localStorage.setItem($vm.hosting_path+"_g_time", new Date() );
+            setInterval(function(){
+                var txt1=localStorage.getItem($vm.hosting_path+"_g_time");
+                var dd=(3600-(new Date().getTime()-new Date(txt1).getTime())/1000);
+                if(dd<0){ 
+                   dd=0;
+                   if(sound==1){
+                       audioPlayer.stop();audioPlayer.play();
+                       $('#time__ID').triggerHandler('click');
+                   }
+                }
+                var m=Math.floor((dd/60)).toFixed(0); if(m.length==1) m='0'+m;
+                var s=(dd%60).toFixed(0);  if(s.length==1) s='0'+s;
+                $('#time__ID').text(+m+":"+s +" left to walk.");
+            },1000);
+            //-----------------------------------
+            $('#time__ID').on('click',function(e){
+                e.preventDefault();
+                localStorage.setItem($vm.hosting_path+"_g_time", new Date() );
+            })
+            //-----------------------------------
+            $('#sound__ID').on('click',function(e){
+                e.preventDefault();
+                sd();
+            })
+            //-----------------------------------
+            $('#get_in__ID').on('click',function(){
+                $vm.load_module('main-panel','',{})
+            })
+            //-----------------------------------
+            $('#scroll_down__ID').on('click',function(e){
+                e.preventDefault();
+                $('html, body').animate({ scrollTop: $('#page2__ID').offset().top-60}, 800, 'linear');
+            })
+            //-----------------------------------
+            var url="__CURRENT_PATH__score.musicxml";
+            const osmd = new opensheetmusicdisplay.OpenSheetMusicDisplay(document.getElementById("score"));
+            //osmd.setOptions({followCursor:true});
+            const audioPlayer = new OsmdAudioPlayer();
+            async function music(scoreXml){
+                await osmd.load(scoreXml);
+                await osmd.render();
+                await audioPlayer.loadScore(osmd);
+                document.getElementById("btn-play").addEventListener("click", () => {
+                    audioPlayer.stop();audioPlayer.play();
+                });
+                document.getElementById("btn-pause").addEventListener("click", () => {
+                    audioPlayer.pause();
+                });
+                document.getElementById("btn-stop").addEventListener("click", () => {
+                    audioPlayer.stop();
+                });
+            };
+            $.get(url,function(scoreXml){
+                music(scoreXml);
+            },'text');
+            //-----------------------------------
+            var a=window.location.href.replace('?/','').split('/'); a.pop();
+            var n=a.pop();
+            var n2=a.pop();
+            var t=n.replace(/-/g,' ');
+            t=t.charAt(0).toUpperCase() + t.slice(1);
+            $('#title__ID').text(t);
+            $('#app__ID').text(n);
+            
+            var txt="";
+            for(a in $vm.module_list){
+                var f=$vm.module_list[a].url.split('/').pop(0);
+                var d=$vm.module_list[a].description; if(d==undefined) d="";
+                if(a.split('_')[0]!='sys') txt+="<li><b>"+f+"</b> "+d+"</li>";
+            }
+            $('#list__ID').html(txt);
+            $('#g__ID').on('click',function(){ 
+                if($('#steps__ID').css('display')=='none') $('#steps__ID').show();
+                else $('#steps__ID').hide();
+            })
+            $('#d__ID').on('click',function(){
+                GitZip.zipRepo('https://github.com/vmiis/mockup/tree/main/'+n2+"/"+n);
+            })
+            //-----------------------------------
+            $('#page1__ID').css('min-height',$vm.min_height+"px");
+            $('#page2__ID').css('min-height',$vm.min_height+"px");
+            $('#page3__ID').css('min-height',$vm.min_height+"px");
+            //-----------------------------------
+        }
+    </script>
+    <style>
+        #D__ID{
+            /*padding:0px;*/
+			height:100%;
+			animation: vm_module_fadein 1.0s, D__ID 3s;
+        }
+        #steps__ID{
+            display: inline-block;
+            background-color: white;
+            padding: 10px;
+            font-size: 14px;
+        }
+        #scroll_down__ID {
+            display:inline-block;
+            padding:10px 20px;
+            cursor:pointer;
+            color:#fff;
+            font-size:150%;
+			animation:scroll__ID 8s;
+			-moz-animation:scroll__ID 8s infinite; /* Firefox */
+			-webkit-animation:scroll__ID 8s infinite; /* Safari and Chrome */
+		}  
+        @keyframes scroll__ID 
+		{
+			0%   {color:#fff;}
+			50%  {color:#333;}
+			100%   {color:#fff;}
+		}
+        @keyframes D__ID {
+			from {padding-top: 400px;}
+			to {padding-top: 0px;}
+		}        
+    </style>
+</div>
+

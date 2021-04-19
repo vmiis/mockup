@@ -1,0 +1,13 @@
+<html>
+	<head>
+	</head>
+	<body>
+		<script>
+			var u=window.location.href;
+			u=u.split('code=').pop();
+			u=u.split('&')[0];
+			window.opener.postMessage({facebook_code:u}, '*');
+			window.close();
+		</script>
+	</body>
+</html>
